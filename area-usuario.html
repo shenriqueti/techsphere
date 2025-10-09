@@ -14,6 +14,7 @@
 </head>
 
 <body>
+  <div class="container">
   <header class="container-cabecalho">
     <div class="container-logo">
       <a href="index.html"><div class="logo">TS</div></a>
@@ -24,8 +25,6 @@
     </div>
 
     <nav class="menu">
-      <a href="index.html#descricao">Descrição</a>
-      <a href="index.html#eventos">Eventos</a>
       <a href="index.html">Home</a>
       <span id="welcome-message">Bem-vindo!</span>
       <button id="logoutBtn" style="background: none; border: none; color: var(--cor-neon-azul); cursor: pointer;">Sair</button>
@@ -33,23 +32,24 @@
     </nav>
   </header>
 
-  <div class="titulo">
-    <h1>Área do Usuário</h1>
-  </div>
-
-  <section class="meus-dados">
-    <h2>Meus Dados</h2>
-    <div id="user-data">
-      <!-- Dados do usuário serão inseridos aqui via JS -->
+  <div class="container">
+    <div class="titulo">
+      <h1>Área do Usuário</h1>
     </div>
-  </section>
 
-  <section class="meus-ingressos">
-    <h2>Meus Ingressos</h2>
-    <div id="tickets-list">
-      <!-- Ingressos serão listados aqui -->
-    </div>
-  </section>
+    <section class="meus-dados">
+      <h2>Meus Dados</h2>
+      <div id="user-data">
+        <!-- Dados do usuário serão inseridos aqui via JS -->
+      </div>
+    </section>
+
+    <section class="meus-ingressos">
+      <h2>Meus Ingressos</h2>
+      <div id="tickets-list">
+        <!-- Ingressos serão listados aqui -->
+      </div>
+    </section>
 
   <button id="back-to-top" title="Voltar ao topo">↑</button>
 
@@ -79,6 +79,7 @@
         </div>
          <p>&copy; 2025 TechSphere, conectando o futuro da tecnologia no Brasil</p>
     </div>
+  </div>
   </footer>
 
   <script>
