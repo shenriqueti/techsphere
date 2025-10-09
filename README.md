@@ -1,6 +1,6 @@
 # 💻 TechSphere: Plataforma de Eventos de Tecnologia
 
-Este projeto simula uma plataforma web para um evento de tecnologia, desenvolvido como parte do projeto final da disciplina de [Nome da Sua Disciplina].
+Este projeto simula uma plataforma web para um evento de tecnologia, desenvolvido como parte do projeto final das disciplinas de Gestão de Tecnologia da informação e Análise de Sistemas.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -22,5 +22,3 @@ Simplesmente abra o arquivo `index.html` em qualquer navegador moderno.
 ## ⚖️ Licença
 
 Este projeto está sob a licença **MIT**.
-
-Em termos simples, isso significa que você tem a **total liberdade** para usar, modificar, copiar e distribuir o código, mesmo em projetos comerciais, desde que mantenha a nota de copyright original (o arquivo `LICENSE`) em qualquer cópia substancial. Não há garantia ou responsabilidade legal sobre o uso do software.
