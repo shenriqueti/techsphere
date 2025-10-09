@@ -25,7 +25,7 @@
 
             <nav class="menu">
                 <a href="#descricao">Descrição</a>
-                <a href="#eventos">Eventos</a>
+                <a href="#agenda">Agenda</a>
                 <a href="#sobre">Sobre</a>
                 <a href="login.html">Login</a>
                 <a href="cadastro.html">Cadastre-se</a>
@@ -80,34 +80,66 @@
                 </p>
             </section>
 
-            <section class="campo-cards" id="eventos">
-                <h2>Eventos dentro da TechSphere</h2>
-                <p>Abaixo estão alguns dos eventos que acontecem simultaneamente.</p>
+            <section class="intro" id="agenda">
+                <h2>Agenda TechSphere</h2>
+                <p>Confira a programação completa dos eventos, workshops e palestras, organizados por categoria.</p>
+
+                <div class="filtros">
+                    <button data-filter="all">Todos</button>
+                    <button data-filter="evento">Eventos</button>
+                    <button data-filter="palestra">Palestras</button>
+                    <button data-filter="workshop">Workshops</button>
+                </div>
+
                 <div class="cards">
-                    <article class="card">
+                    <div class="card" data-category="evento">
                         <img src="./images/future_of_ai.jpg" alt="AI Future Summit.">
                         <div class="corpo-card">
                             <h3>AI Future Summit</h3>
-                            <p>Painéis sobre modelos generativos, MLOps e aplicações éticas de IA.</p>
+                            <p>Data: 10/10 - Dia inteiro - Local: Auditório Principal</p>
                             <button class="btn-descricao" data-acao="abrir" data-id="1">Ver detalhes</button>
                         </div>
-                    </article>
-                    <article class="card">
+                    </div>
+                    <div class="card" data-category="evento">
                         <img src="./images/cloudDev.jpg" alt="Cloud & DevOps Conference.">
                         <div class="corpo-card">
                             <h3>Cloud & DevOps Conference</h3>
-                            <p>Workshops hands-on sobre infraestrutura como código e abstração.</p>
+                            <p>Data: 10/10 - Dia inteiro - Local: Sala de Workshops</p>
                             <button class="btn-descricao" data-acao="abrir" data-id="2">Ver detalhes</button>
                         </div>
-                    </article>
-                    <article class="card">
+                    </div>
+                    <div class="card" data-category="evento">
                         <img src="./images/cybersecurity.jpg" alt="Cybersecurity Day.">
                         <div class="corpo-card">
                             <h3>Cybersecurity Day</h3>
-                            <p>CTF, laboratórios práticos e painéis com especialistas em defesa cibernética.</p>
+                            <p>Data: 10/10 - Dia inteiro - Local: Sala de Segurança</p>
                             <button class="btn-descricao" data-acao="abrir" data-id="3">Ver detalhes</button>
                         </div>
-                    </article>
+                    </div>
+                    <div class="card" data-category="palestra">
+                        <img src="./images/future_of_ai.jpg" alt="Palestra IA no Futuro.">
+                        <div class="corpo-card">
+                            <h3>IA no Futuro</h3>
+                            <p>Data: 10/10 - 14h - Local: Auditório Principal</p>
+                            <button class="btn-descricao" data-acao="abrir" data-id="4">Ver detalhes</button>
+                        </div>
+                    </div>
+                    <div class="card" data-category="workshop">
+                        <img src="./images/cloudDev.jpg" alt="Workshop Hands-on em Cloud.">
+                        <div class="corpo-card">
+                            <h3>Hands-on em Cloud</h3>
+                            <p>Data: 10/10 - 16h - Local: Sala de Workshops</p>
+                            <button class="btn-descricao" data-acao="abrir" data-id="5">Ver detalhes</button>
+                        </div>
+                    </div>
+                    <div class="card" data-category="palestra">
+                        <img src="./images/cybersecurity.jpg" alt="Palestra Blockchain para Iniciantes.">
+                        <div class="corpo-card">
+                            <h3>Blockchain para Iniciantes</h3>
+                            <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
+                            <button class="btn-descricao" data-acao="abrir" data-id="6">Ver detalhes</button>
+                        </div>
+                    </div>
                     
                 </div>
             </section>
@@ -117,30 +149,6 @@
                 <p>
                     Os eventos que compõem a TechSphere foram cuidadosamente selecionados para oferecer uma jornada completa pelo ecossistema tecnológico atual. Do AI Future Summit ao Cybersecurity Day, cada trilha oferece conteúdo aprofundado e prático, criando um ambiente fértil para networking, recrutamento e surgimento de parcerias estratégicas.
                 </p>
-            </section>
-
-            <section class="programacao">
-                <h2>Programação</h2>
-                <div class="filtros">
-                    <button data-filter="all">Todos</button>
-                    <button data-filter="palestra">Palestras</button>
-                    <button data-filter="workshop">Workshops</button>
-                </div>
-                <div class="cartoes">
-                    <div class="cartao" data-category="palestra">
-                        <h3>IA no Futuro</h3>
-                        <p>10/10 - 14h</p>
-                    </div>
-                    <div class="cartao" data-category="workshop">
-                        <h3>Hands-on em Cloud</h3>
-                        <p>10/10 - 16h</p>
-                    </div>
-                    <div class="cartao" data-category="palestra">
-                        <h3>Blockchain para Iniciantes</h3>
-                        <p>11/10 - 10h</p>
-                    </div>
-                    
-                </div>
             </section>
 
             <section class="palestrantes" id="Palestrantes">
@@ -214,9 +222,9 @@
             </div>
         </footer>
 
-    </div> <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-card" role="document">
-            <button class="btn-fechar" aria-label="Fechar">&times;</button>
+            <button class="btn-fechar" aria-label="Fechar" onclick="fecharModal('modal')">&times;</button>
             <div class="modal-cabecalho"><h3 id="mTitulo"></h3></div>
             <div class="modal-corpo">
                 <img src="" id="mImg" alt="Capa do Evento">
@@ -291,8 +299,6 @@
     </script>
 
     <script src="js/script.js"></script>
-    <script src="js/index.js"></script>
-    <script src="js/sobre.js"></script>
 </body>
 
 </html>

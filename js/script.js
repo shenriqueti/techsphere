@@ -31,10 +31,12 @@ document.addEventListener('keydown', function(event) {
 document.addEventListener('DOMContentLoaded', function() {
     
   const eventos = {
-    1: { titulo: 'AI Future Summit', descricao: 'Painéis sobre modelos generativos, MLOps e aplicações éticas de IA.', img: './images/future_of_ai.jpg' },
-    2: { titulo: 'Cloud & DevOps Conference', descricao: 'Workshops hands-on sobre infraestrutura como código e abstração.', img: './images/cloudDev.jpg' },
-    3: { titulo: 'Cybersecurity Day', descricao: 'CTF, laboratórios práticos e painéis com especialistas em defesa cibernética.', img: './images/cybersecurity.jpg' },
-    4: { titulo: 'Frontend Dev Live', descricao: 'Demonstrações, práticas de performance e acessibilidade com live coding.', img: './images/frontend.jpg' }
+    1: { titulo: 'AI Future Summit', descricao: 'Painéis sobre modelos generativos, MLOps e aplicações éticas de IA. Data: 10/10 - Dia inteiro - Local: Auditório Principal', img: './images/future_of_ai.jpg' },
+    2: { titulo: 'Cloud & DevOps Conference', descricao: 'Workshops hands-on sobre infraestrutura como código e abstração. Data: 10/10 - Dia inteiro - Local: Sala de Workshops', img: './images/cloudDev.jpg' },
+    3: { titulo: 'Cybersecurity Day', descricao: 'CTF, laboratórios práticos e painéis com especialistas em defesa cibernética. Data: 10/10 - Dia inteiro - Local: Sala de Segurança', img: './images/cybersecurity.jpg' },
+    4: { titulo: 'IA no Futuro', descricao: 'Palestra sobre tendências e inovações em inteligência artificial. Data: 10/10 - 14h - Local: Auditório Principal', img: './images/future_of_ai.jpg' },
+    5: { titulo: 'Hands-on em Cloud', descricao: 'Workshop prático sobre computação em nuvem e DevOps. Data: 10/10 - 16h - Local: Sala de Workshops', img: './images/cloudDev.jpg' },
+    6: { titulo: 'Blockchain para Iniciantes', descricao: 'Palestra introdutória sobre blockchain e criptomoedas. Data: 11/10 - 10h - Local: Auditório Principal', img: './images/cybersecurity.jpg' }
   };
 
   document.addEventListener('click', function(event) {
@@ -53,9 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Filtros da Programação
+  // Filtrin da Agenda
   const filterButtons = document.querySelectorAll('.filtros button');
-  const cartoes = document.querySelectorAll('.programacao .cartao');
+  const cartoes = document.querySelectorAll('.intro .card');
 
   filterButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -75,4 +77,51 @@ document.addEventListener('DOMContentLoaded', function() {
   if (filterButtons.length > 0) {
       filterButtons[0].click();
   }
+
+  // Slideshow baby!
+  const slidesContainer = document.getElementById('slides');
+  const pontosContainer = document.getElementById('pontos');
+  const slides = slidesContainer.querySelectorAll('.slide');
+  let currentSlide = 0;
+  let autoSlideInterval;
+
+  // cria indicadores
+  slides.forEach((_, index) => {
+    const ponto = document.createElement('div');
+    ponto.classList.add('ponto');
+    if (index === 0) ponto.classList.add('ativo');
+    ponto.addEventListener('click', () => showSlide(index));
+    pontosContainer.appendChild(ponto);
+  });
+
+  const pontos = pontosContainer.querySelectorAll('.ponto');
+
+  function showSlide(index) {
+    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+    pontos.forEach((ponto, i) => {
+      ponto.classList.toggle('ativo', i === index);
+    });
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(nextSlide, 5000);
+  }
+
+  function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+  }
+
+  // Starta auto-rotação
+  startAutoSlide();
+
+  // Pause no hover
+  const banner = document.querySelector('.banner-apresentacao');
+  banner.addEventListener('mouseenter', stopAutoSlide);
+  banner.addEventListener('mouseleave', startAutoSlide);
 });
