@@ -29,6 +29,7 @@
       <span id="welcome-message">Bem-vindo!</span>
       <button id="logoutBtn" style="background: none; border: none; color: var(--cor-neon-azul); cursor: pointer;">Sair</button>
       <a href="#contato">Contato</a>
+      <button id="theme-toggle" aria-label="Alterar tema"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></button>
     </nav>
     </header>
 
@@ -99,6 +100,25 @@
         top: 0,
         behavior: 'smooth'
       });
+    });
+  </script>
+
+  <script>
+    // funcionalide de togglar pro tema
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // carregar o tema salvo no f5
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      body.classList.add('light-theme');
+    }
+
+    // togglar no click
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-theme');
+      const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
+      localStorage.setItem('theme', currentTheme);
     });
   </script>
 </body>
