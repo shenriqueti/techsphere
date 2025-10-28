@@ -1,4 +1,4 @@
-// Função para abrir o modal, mantida do seu código original
+// Modal Functions
 function abrirModal(id) {
   const modal = document.getElementById(id);
   if (modal) {
@@ -6,7 +6,6 @@ function abrirModal(id) {
   }
 }
 
-// Função para fechar o modal, mantida do seu código original
 function fecharModal(id) {
   const modal = document.getElementById(id);
   if (modal) {
@@ -14,7 +13,19 @@ function fecharModal(id) {
   }
 }
 
-// Event listener para fechar o modal clicando fora ou na tecla ESC
+function abrirModalExitIntent() {
+  const modalId = 'modalExitIntent';
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    const mensagemElement = modal.querySelector('.modal-mensagem');
+    if (mensagemElement) {
+      mensagemElement.textContent = "Já vai? Não perca a chance de garantir seu ingresso para o TechSphere!";
+    }
+    modal.style.display = 'flex';
+  }
+}
+
+// Event Listeners
 window.onclick = function(event) {
   if (event.target.classList.contains('modal')) {
     event.target.style.display = 'none';
@@ -27,9 +38,8 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
-// Lógica para os modais de EVENTOS e filtros da PROGRAMAÇÃO
 document.addEventListener('DOMContentLoaded', function() {
-    
+  // Events Data
   const eventos = {
     1: { titulo: 'AI Future Summit', descricao: 'Painéis sobre modelos generativos, MLOps e aplicações éticas de IA. Data: 10/10 - Dia inteiro - Local: Auditório Principal', img: './images/future_of_ai.jpg' },
     2: { titulo: 'Cloud & DevOps Conference', descricao: 'Workshops hands-on sobre infraestrutura como código e abstração. Data: 10/10 - Dia inteiro - Local: Sala de Workshops', img: './images/cloudDev.jpg' },
@@ -39,10 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     6: { titulo: 'Blockchain para Iniciantes', descricao: 'Palestra introdutória sobre blockchain e criptomoedas. Data: 11/10 - 10h - Local: Auditório Principal', img: './images/cybersecurity.jpg' }
   };
 
+  // Event Modal Logic
   document.addEventListener('click', function(event) {
     const target = event.target;
-    
-    // Lógica para abrir o modal de eventos
     if (target.matches('.btn-descricao[data-acao="abrir"]')) {
       const id = target.getAttribute('data-id');
       const evento = eventos[id];
@@ -55,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Filtrin da Agenda
+  // Filter Logic
   const filterButtons = document.querySelectorAll('.filtros button');
   const cartoes = document.querySelectorAll('.intro .card');
 
@@ -66,26 +75,25 @@ document.addEventListener('DOMContentLoaded', function() {
       button.classList.add('active');
 
       cartoes.forEach(cartao => {
-        cartao.style.display = 'none'; // Esconde todos primeiro
+        cartao.style.display = 'none';
         if (filter === 'all' || cartao.getAttribute('data-category') === filter) {
-          cartao.style.display = 'flex'; // Mostra apenas os que correspondem
+          cartao.style.display = 'flex';
         }
       });
     });
   });
-  
+
   if (filterButtons.length > 0) {
-      filterButtons[0].click();
+    filterButtons[0].click();
   }
 
-  // Slideshow baby!
+  // Slideshow Logic
   const slidesContainer = document.getElementById('slides');
   const pontosContainer = document.getElementById('pontos');
   const slides = slidesContainer.querySelectorAll('.slide');
   let currentSlide = 0;
   let autoSlideInterval;
 
-  // cria indicadores
   slides.forEach((_, index) => {
     const ponto = document.createElement('div');
     ponto.classList.add('ponto');
@@ -117,11 +125,24 @@ document.addEventListener('DOMContentLoaded', function() {
     clearInterval(autoSlideInterval);
   }
 
-  // Starta auto-rotação
   startAutoSlide();
 
-  // Pause no hover
   const banner = document.querySelector('.banner-apresentacao');
   banner.addEventListener('mouseenter', stopAutoSlide);
   banner.addEventListener('mouseleave', startAutoSlide);
+
+  // Exit Intent Modal
+  let exitIntentTriggered = false;
+
+  document.documentElement.addEventListener('mouseleave', function() {
+    if (!exitIntentTriggered) {
+      abrirModalExitIntent();
+      exitIntentTriggered = true;
+    }
+  });
+
+  const closeButtonExit = document.getElementById('fecharModalExit');
+  if (closeButtonExit) {
+    closeButtonExit.addEventListener('click', () => fecharModal('modalExitIntent'));
+  }
 });
