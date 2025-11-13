@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TechSpere.Brasil</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!--  Biblioteca Inputmask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.9/inputmask.min.js"></script>
+
+    <!-- Seu script com defer -->
+    <script src="js/cadastro.js" defer></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="container-cabecalho">
+        <div class="container-logo">
+          <a href="index.html"><div class="logo">TS</div></a>
+          <div class="conteudo-logo">
+            <div class="titulo-logo">TechSphere</div>
+            <p class="texto-logo">Festival de Inovação & Tecnologia</p>
+          </div>
+        </div>
+
+        <nav class="menu">
+          <a href="index.html">Home</a>
+          <a href="login.html">Login</a>
+          <a href="cadastro.html">Cadastre-se</a>
+          <a href="#contato">Contato</a>
+          <button id="theme-toggle" aria-label="Alterar tema"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></button>
+        </nav>
+      </header>
+
+      <div class="titulo">
+        <h1 id="titulo">Inscreva-se</h1>
+      </div>
+
+      <form id="form" autocomplete="off" method="post">
+        <fieldset class="grupo">
+          <div class="form-grid">
+            <h2 class="subTitulo">Dados Pessoais:</h2>
+            <br>
+            <div class="input-box">
+              <label for="nome">Nome completo:</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Digite o nome completo (mínimo 2 caracteres)"
+                required
+              />
+              <span class="error" id="nome-error"></span>
+            </div>
+
+            <div class="input-box">
+              <label for="nome_mae">Nome da Mãe:</label>
+              <input
+                type="text"
+                id="nome_mae"
+                name="nome_mae"
+                placeholder="Digite o nome materno (mínimo 2 caracteres)"
+                required
+              />
+              <span class="error" id="nome_mae-error"></span>
+            </div>
+
+            <div class="input-box">
+              <label for="email">Email Válido:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Digite o email"
+                required
+              />
+              <span class="error" id="email-error"></span>
+            </div>
+
+            <div class="linha-dupla">
+              <div class="input-box">
+                <label for="cpf">CPF:</label>
+                <input
+                  type="text"
+                  id="cpf"
+                  name="cpf"
+                  placeholder="Digite o CPF"
+                  onclick="mascaraCPF()"
+                  
+                  required
+                />
+                <span class="error" id="cpf-error"></span>
+              </div>
+
+              <div class="input-box">
+                <label for="data_nascimento">Data de Nascimento:</label>
+                <input
+                  type="date"
+                  id="data_nascimento"
+                  name="data_nascimento"
+                  required
+                />
+                <span class="error" id="data_nascimento-error"></span>
+              </div>
+            </div>
+
+            <div class="input-box">
+              <label for="celular">Celular:</label>
+              <input
+                type="text"
+                id="celular"
+                name="celular"
+                placeholder="Digite seu celular"
+                onclick="validateCelular()"
+                required
+              />
+              <span class="error" id="celular-error"></span>
+            </div>
+
+            <div class="input-box genero-box">
+              <label>Gênero:</label>
+              <div class="radio-opcao">
+                <input
+                  type="radio"
+                  id="masculino"
+                  name="genero"
+                  value="masculino"
+                  required
+                />
+                <label for="masculino">Masculino</label>
+              </div>
+              <div class="radio-opcao">
+                <input
+                  type="radio"
+                  id="feminino"
+                  name="genero"
+                  value="feminino"
+                  required
+                />
+                <label for="feminino">Feminino</label>
+              </div>
+             
+              <span class="error" id="genero-error"></span>
+            </div>
+<h2 class="subTitulo">Endereço:</h2>
+<br>
+            <div class="linha-dupla">
+              <div class="input-box">
+                <label for="cep">CEP:</label>
+                <input
+                  type="text"
+                  id="cep"
+                  name="cep"
+                  placeholder="Digite seu CEP"
+                  onclick="validateCep()"
+                  required
+                />
+                <span class="error" id="cep-error"></span>
+              </div>
+
+              <div class="input-box">
+                <label for="numero">Número:</label>
+                <input
+                  type="text"
+                  id="numero"
+                  name="numero"
+                  placeholder="Número da residência"
+                  required
+                />
+                <span class="error" id="numero-error"></span>
+              </div>
+            </div>
+
+            <div class="input-box">
+              <label for="rua">Rua:</label>
+              <input
+                type="text"
+                id="rua"
+                name="rua"
+                placeholder="Digite sua rua"
+                required
+              />
+              <span class="error" id="rua-error"></span>
+            </div>
+
+            <div class="input-box">
+              <label for="complemento">Complemento:</label>
+              <input
+                type="text"
+                id="complemento"
+                name="complemento"
+                placeholder="Digite o complemento (opcional)"
+              />
+              <span class="error" id="complemento-error"></span>
+            </div>
+
+            <div class="input-box">
+              <label for="bairro">Bairro:</label>
+              <input
+                type="text"
+                id="bairro"
+                name="bairro"
+                placeholder="Digite o bairro"
+                required
+              />
+              <span class="error" id="bairro-error"></span>
+            </div>
+
+            <div class="linha-dupla">
+              <div class="input-box">
+                <label for="cidade">Cidade:</label>
+                <input
+                  type="text"
+                  id="cidade"
+                  name="cidade"
+                  placeholder="Digite sua cidade"
+                  required
+                />
+                <span class="error" id="cidade-error"></span>
+              </div>
+
+              <div class="input-box">
+                <label for="estado">Estado:</label>
+<input list="estados" id="estado" name="estado" placeholder="Selecione ou digite seu estado">
+
+<datalist id="estados">
+  <option value="Acre">
+  <option value="Alagoas">
+  <option value="Amapá">
+  <option value="Amazonas">
+  <option value="Bahia">
+  <option value="Ceará">
+  <option value="Distrito Federal">
+  <option value="Espírito Santo">
+  <option value="Goiás">
+  <option value="Maranhão">
+  <option value="Mato Grosso">
+  <option value="Mato Grosso do Sul">
+  <option value="Minas Gerais">
+  <option value="Pará">
+  <option value="Paraíba">
+  <option value="Paraná">
+  <option value="Pernambuco">
+  <option value="Piauí">
+  <option value="Rio de Janeiro">
+  <option value="Rio Grande do Norte">
+  <option value="Rio Grande do Sul">
+  <option value="Rondônia">
+  <option value="Roraima">
+  <option value="Santa Catarina">
+  <option value="São Paulo">
+  <option value="Sergipe">
+  <option value="Tocantins">
+</datalist>
+
+              </div>
+            </div>
+            <br>
+<h2 class="subTitulo">Informações de login: </h2>
+<br>
+         <div class="input-box">
+
+              <label for="login">Login:</label>
+
+              <input
+
+                type="text"
+
+                id="login"
+
+                name="login"
+
+                placeholder="Digite o login (mínimo 4 caracteres)"
+
+                required
+
+              />
+
+              <span class="error" id="login-error"></span>
+
+            </div>
+
+<br>
+
+           <div class="linha-dupla senhas">
+  <div class="input-box">
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" name="senha" placeholder="Digite sua senha (mínimo 8 caracteres)">
+  </div>
+
+  <div class="input-box">
+    <label for="confirmaSenha">Confirmar Senha:</label>
+    <input type="password" id="confirmaSenha" name="confirmaSenha" placeholder="Confirme sua senha">
+  </div>
+</div>
+
+            </div>
+            <div class="input-box">
+             <input type="submit" value="Enviar" onclick="redirecionar(event)"/>
+              <input type="reset" value="Limpar" />
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <button id="back-to-top" title="Voltar ao topo">↑</button>
+
+      <footer class="footer" id="contato">
+        <div class="container">
+          <div class="patrocinadores-master">
+            <h3 class="Titulo">Patrocinador Master</h3>
+            <a href="https://www.itau.com.br/" target="_blank"
+              ><img src="images/itau-10.png" alt="Logo do Itaú"
+            /></a>
+          </div>
+
+          <div class="patrocinadores">
+            <h3 class="Titulo">Patrocinadores</h3>
+            <div class="logos-grid">
+              <div class="logos">
+                <a href="https://www.apple.com/br/store" target="_blank"
+                  ><img src="images/applebranca.png" alt="Logo Apple"
+                /></a>
+              </div>
+              <div class="logos">
+                <a href="https://www.coca-cola.com/br/pt" target="_blank"
+                  ><img src="images/coca-cola-1.png" alt="Logo Coca-Cola"
+                /></a>
+              </div>
+              <div class="logos">
+                <a
+                  href="https://about.google/intl/pt_ALL/company-info/"
+                  target="_blank"
+                  ><img src="images/google-logo-about.svg" alt="Logo Google"
+                /></a>
+              </div>
+              <div class="logos">
+                <a href="https://www.redbull.com/br-pt" target="_blank"
+                  ><img
+                    src="images/redbullcom-logo_double-with-text.svg"
+                    alt="Logo Red Bull"
+                /></a>
+              </div>
+              <div class="logos">
+                <a href="https://www.unisuam.edu.br/" target="_blank"
+                  ><img src="images/unisuam.png" alt="Logo Unisuam"
+                /></a>
+              </div>
+              <div class="logos">
+                <a href="https://www.tim.com.br/rj" target="_blank"
+                  ><img src="images/tim.svg" alt="Logo Tim"
+                /></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-icons">
+            <a
+              href="https://www.instagram.com/unisuam/"
+              target="_blank"
+              aria-label="Visite nosso Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.facebook.com/UNISUAM/?locale=pt_BR"
+              target="_blank"
+              aria-label="Visite nosso Facebook"
+              ><i class="fab fa-facebook"></i
+            ></a>
+            <a
+              href="https://x.com/unisuam_mais"
+              target="_blank"
+              aria-label="Visite nosso Twitter"
+              ><i class="fab fa-twitter"></i
+            ></a>
+          </div>
+          <p>
+            &copy; 2025 TechSphere, conectando o futuro da tecnologia no Brasil
+          </p>
+        </div>
+      </footer>
+    </div>
+    <script>
+      const backToTopButton = document.getElementById("back-to-top");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopButton.style.display = "block";
+        } else {
+          backToTopButton.style.display = "none";
+        }
+      });
+
+      backToTopButton.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    </script>
+
+    <script>
+      // funcionalide de togglar pro tema
+      const themeToggle = document.getElementById('theme-toggle');
+      const body = document.body;
+
+      // carregar o tema salvo no f5
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        body.classList.add('light-theme');
+      }
+
+      // togglar o tema no click
+      themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-theme');
+        const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
+        localStorage.setItem('theme', currentTheme);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+.vscode/
+
+.DS_Store # macOS
+Thumbs.db # Windows
+
+*.log
+npm-debug.log*

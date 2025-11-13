@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - TechSphere</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Seu script com defer -->
+  <script src="js/login.js" defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <header class="container-cabecalho">
+      <div class="container-logo">
+        <a href="index.html"><div class="logo">TS</div></a>
+        <div class="conteudo-logo">
+          <div class="titulo-logo">TechSphere</div>
+          <p class="texto-logo">Festival de Inovação & Tecnologia</p>
+        </div>
+      </div>
+
+      <nav class="menu">
+        <a href="index.html">Home</a>
+        <a href="cadastro.html">Cadastre-se</a>
+        <a href="#contato">Contato</a>
+        <button id="theme-toggle" aria-label="Alterar tema"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></button>
+      </nav>
+    </header>
+
+    <div class="titulo">
+      <h1>Login</h1>
+    </div>
+
+    <form id="loginForm" autocomplete="off">
+      <div id="erro" style="color: red; font-weight: bold; margin-bottom: 10px; text-align: center;"></div>
+
+      <fieldset class="grupo">
+        <div class="input-group">
+          <div class="input-box">
+            <label for="username">Nome de Usuário ou E-mail:</label><br>
+            <input type="text" id="username" name="username" placeholder="Digite seu usuário ou e-mail" required><br><br>
+          </div>
+
+          <div class="input-box">
+            <label for="password">Senha:</label><br>
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required><br><br>
+          </div>
+
+          <div class="input-box">
+            <input type="button" id="loginBtn" value="Entrar">
+          </div>
+
+          <div style="text-align: center; margin-top: 1rem;">
+            <a href="cadastro.html" style="color: var(--cor-neon-azul); text-decoration: none;">Não tem conta? Cadastre-se</a>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+
+    <button id="back-to-top" title="Voltar ao topo">↑</button>
+
+    <footer class="footer" id="contato">
+      <div class="container">
+        <div class="patrocinadores-master">
+          <h3 class="Titulo">Patrocinador Master</h3>
+          <a href="https://www.itau.com.br/" target="_blank"><img src="images/itau-10.png" alt="Logo do Itaú"></a>
+        </div>
+
+        <div class="patrocinadores">
+          <h3 class="Titulo">Patrocinadores</h3>
+          <div class="logos-grid">
+            <div class="logos"><a href="https://www.apple.com/br/store" target="_blank"><img src="images/applebranca.png" alt="Logo Apple"></a></div>
+            <div class="logos"><a href="https://www.coca-cola.com/br/pt" target="_blank"><img src="images/coca-cola-1.png" alt="Logo Coca-Cola"></a></div>
+            <div class="logos"><a href="https://about.google/intl/pt_ALL/company-info/" target="_blank"><img src="images/google-logo-about.svg" alt="Logo Google"></a></div>
+            <div class="logos"><a href="https://www.redbull.com/br-pt" target="_blank"><img src="images/redbullcom-logo_double-with-text.svg" alt="Logo Red Bull"></a></div>
+            <div class="logos"><a href="https://www.unisuam.edu.br/" target="_blank"><img src="images/unisuam.png" alt="Logo Unisuam"></a></div>
+            <div class="logos"><a href="https://www.tim.com.br/rj" target="_blank"><img src="images/tim.svg" alt="Logo Tim"></a></div>
+          </div>
+        </div>
+
+        <div class="social-icons">
+          <a href="https://www.instagram.com/unisuam/" target="_blank" aria-label="Visite nosso Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/UNISUAM/?locale=pt_BR" target="_blank" aria-label="Visite nosso Facebook"><i class='fab fa-facebook'></i></a>
+          <a href="https://x.com/unisuam_mais" target="_blank" aria-label="Visite nosso Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>&copy; 2025 TechSphere, conectando o futuro da tecnologia no Brasil</p>
+      </div>
+    </footer>
+  </div>
+  <script>
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+  <script>
+    // funcionalide de togglar pro tema
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // carregar o tema salvo no f5
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      body.classList.add('light-theme');
+    }
+
+    // togglar o tema no click
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-theme');
+      const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
+      localStorage.setItem('theme', currentTheme);
+    });
+  </script>
+</body>
+
+</html>
