@@ -30,6 +30,12 @@
         <a href="#contato">Contato</a>
         <button id="theme-toggle" aria-label="Alterar tema"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></button>
       </nav>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
     <div class="titulo">
@@ -127,6 +133,16 @@
       body.classList.toggle('light-theme');
       const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
       localStorage.setItem('theme', currentTheme);
+    });
+  </script>
+
+  <script>
+    // funcionalidade do menu hamburger
+    const menuToggle = document.getElementById("menu-toggle");
+    const menu = document.querySelector(".menu");
+
+    menuToggle.addEventListener("click", () => {
+      menu.classList.toggle("active");
     });
   </script>
 </body>

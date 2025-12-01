@@ -137,7 +137,7 @@ body {
 
 .slide {
   min-width: 100%;
-  height: 60vh;
+  min-height: 60vh;
   position: relative;
   transition: transform 0.5s ease;
 }
@@ -465,7 +465,7 @@ body.light-theme .modal {
 }
 
 .logos-grid .logos img {
-  max-height: 40px;
+  max-height: 30px;
   width: auto;
   filter: grayscale(100%) invert(1) opacity(0.5);
   transition: all 0.3s ease;
@@ -697,6 +697,7 @@ body.light-theme .modal {
     flex-direction: column;
     gap: 1rem;
     padding: 1rem 0;
+    position: relative;
   }
   .container-logo {
     gap: 8px;
@@ -712,16 +713,59 @@ body.light-theme .modal {
   .texto-logo {
     font-size: 0.8rem;
   }
-  .menu {
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--cor-neon-azul);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    justify-content: center;
     align-items: center;
+    gap: 4px;
+    transition: background-color 0.3s ease;
+  }
+  .menu-toggle:hover {
+    background: transparent;
+    border: 1px solid var(--cor-neon-azul);
+  }
+  .menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--cor-fundo);
+    transition: 0.3s;
+  }
+  .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  .menu.active {
+    display: flex;
   }
   .menu a {
     font-size: 0.9rem;
   }
   .banner-apresentacao, .slide {
-    height: 40vh;
+    height: 60vh;
   }
   .banner-conteudo {
     padding: 1rem;
@@ -791,7 +835,7 @@ body.light-theme .modal {
     font-size: 1rem;
   }
   .logos-grid {
-    gap: 2rem 3rem;
+    gap: 1.5rem 2rem;
   }
   .logos-grid .logos img {
     max-height: 30px;
@@ -864,14 +908,75 @@ body.light-theme .modal {
   }
 }
 
+/* Landscape phones and small screens */
+@media (max-width: 768px) and (orientation: landscape) {
+  .banner-apresentacao, .slide {
+    height: 80vh;
+  }
+  .banner-conteudo {
+    padding: 1.5rem;
+  }
+  .banner-conteudo h1, .banner-conteudo h2 {
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+  }
+  .banner-conteudo p {
+    font-size: 0.8rem;
+  }
+}
+
 /* Celulares e tablets pequenos (481px - 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
   .container-cabecalho {
     flex-direction: column;
     gap: 1.5rem;
+    position: relative;
+  }
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--cor-neon-azul);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    transition: background-color 0.3s ease;
+  }
+  .menu-toggle:hover {
+    background: transparent;
+    border: 1px solid var(--cor-neon-azul);
+  }
+  .menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--cor-fundo);
+    transition: 0.3s;
   }
   .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    flex-direction: column;
     gap: 1rem;
+  }
+  .menu.active {
+    display: flex;
   }
   .header {
     flex-direction: column;
@@ -881,7 +986,7 @@ body.light-theme .modal {
     margin: 0 1rem;
   }
   .banner-apresentacao, .slide {
-    height: 50vh;
+    height: 80vh;
   }
   .banner-conteudo {
     padding: 2rem;
@@ -958,6 +1063,56 @@ body.light-theme .modal {
 
 /* Tablets (769px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
+  .container-cabecalho {
+    position: relative;
+  }
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--cor-neon-azul);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    transition: background-color 0.3s ease;
+  }
+  .menu-toggle:hover {
+    background: transparent;
+    border: 1px solid var(--cor-neon-azul);
+  }
+  .menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--cor-fundo);
+    transition: 0.3s;
+  }
+  .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .menu.active {
+    display: flex;
+  }
   .container {
     max-width: 1000px;
   }

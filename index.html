@@ -37,6 +37,12 @@
       </nav>
     </header>
 
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
     <main>
       <section class="banner-apresentacao">
         <div class="banners-deslizantes" id="slides">
@@ -555,6 +561,16 @@
         ? "light"
         : "dark";
       localStorage.setItem("theme", currentTheme);
+    });
+  </script>
+
+  <script>
+    // funcionalidade do menu hamburger
+    const menuToggle = document.getElementById("menu-toggle");
+    const menu = document.querySelector(".menu");
+
+    menuToggle.addEventListener("click", () => {
+      menu.classList.toggle("active");
     });
   </script>
   </body>
