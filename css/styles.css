@@ -657,6 +657,11 @@ body.light-theme .modal {
   box-shadow: var(--sombra-neon-azul);
 }
 
+.buttons-container {
+  flex-direction: row;
+  gap: 1rem;
+}
+
 /* ========================================= */
 /* 12. BOTÃO VOLTAR AO TOPO                  */
 /* ========================================= */
