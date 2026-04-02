@@ -66,11 +66,6 @@ body {
 /* ========================================= */
 /* 3. CABEÇALHO E NAVEGAÇÃO                  */
 /* ========================================= */
-#tituloC{
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 5.5vw, 4.8rem);
-
-}
 
 .container-cabecalho {
   display: flex;
@@ -98,6 +93,7 @@ body {
   height: 48px;
   font-size: 1.2rem;
 }
+
 
 .titulo-logo {
   font-size: 1.5rem;
@@ -618,6 +614,8 @@ body.light-theme .modal {
 .titulo {
   text-align: center;
   padding: 3rem 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 4.8rem);
 }
 
 .titulo h1 {

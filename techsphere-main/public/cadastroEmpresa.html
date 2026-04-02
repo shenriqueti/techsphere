@@ -44,53 +44,53 @@
 
 
       <div class="titulo">
-        <h1 id="tituloC">Cadastre seu evento</h1>
+        <h1 id="titulo">Cadastre sua empresa</h1>
       </div>
 
       <form id="form" autocomplete="off" method="post">
         <fieldset class="grupo">
           <div class="form-grid">
             <div class="input-box">
-              <label for="nome">Nome do Evento:</label>
+              <label for="nome">Nome da empresa:</label>
               <input
                 type="text"
-                id="evento"
-                name="evento"
-                placeholder="Digite o nome do evento"
+                id="empresa"
+                name="empresa"
+                placeholder="Digite o nome da empresa"
                 required
               />
-              <span class="error" id="evento-error"></span>
+              <span class="error" id="empresa-error"></span>
             </div>           
 
             <div class="input-box">
-              <label for="link-ingresso">Link para a compra do ingresso:</label>
+              <label for="objetivo">Objetivo da Empresa:</label>
               <input
-                type="link-ingresso"
-                id="link-ingresso"
-                name="link-ingresso"
-                placeholder="Digite o link do evento"
+                type="text"
+                id="objetivo"
+                name="objetivo"
+                placeholder="Digite o objetivo da empresa"
                 required
               />
-              <span class="error" id="link-error"></span>
+              <span class="error" id="objetivo-error"></span>
             </div>
 
             <div class="linha-dupla">
               <div class="input-box">
-                <label for="data">Datas do evento:</label>
+                <label for="cnpj">Cnpj:</label>
                 <input
                   type="text"
-                  id="data"
-                  name="data"
-                  placeholder="Digite uma ou mais datas do evento"
+                  id="cnpj"
+                  name="cnpj"
+                  placeholder="Digite o cnpj da empresa"
                   required
                 />
-                <span class="error" id="cpf-error"></span>
+                <span class="error" id="cnpj-error"></span>
               </div>
             </div>           
 
             <div class="linha-dupla">
               <div class="input-box">
-                <label for="hora">Horário:</label>
+                <label for="hora">Horários de funcionamento:</label>
                 <input
                   type="text"
                   id="hora"
@@ -102,18 +102,31 @@
               </div>
             </div>
 
+            <div class="input-box">
+              <label for="celular">Celular para contato:</label>
+              <input
+                type="text"
+                id="celular"
+                name="celular"
+                placeholder="Digite seu celular "
+                required
+              />
+              <span class="error" id="celular-error"></span>
+            </div>
 
             <div class="input-box">
-                <label for="descricao">Descrição do evento:</label>
-                <textarea
-                    id="descricao"
-                    name="descricao"
-                    placeholder="Digite sa descrição do evento"
-                    rows="4"
-                    required
-                ></textarea>
-                <span class="error" id="mensagem-error"></span>
+              <label for="email">E-mail para contato:</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Digite o email da empresa "
+                required
+              />
+              <span class="error" id="celular-error"></span>
             </div>
+
+            
             
         </fieldset>
       </form>
@@ -231,12 +244,58 @@
                 <span class="error" id="estado-error"></span>
             </div>
 
-            
-
-            
-          </div>
+            </div>
         </fieldset>
-      </form>
+    </form>
+
+    <form id="form" autocomplete="off" method="post">
+        <fieldset class="grupo">
+            <div class="form-grid">
+
+            <div class="input-box">
+                <label for="login">Login:</label>
+                <input
+                type="text"
+                id="login"
+                name="login"
+                placeholder="Digite o login (mínimo 4 caracteres)"
+                required
+                />
+                <span class="error" id="login-error"></span>
+            </div>
+
+            <div class="input-box password-box">
+                <label for="senha">Senha:</label>
+                <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Digite sua senha (mínimo 8 caracteres: 1 maiúscula, 1 minúscula, 1 número, 1 especial)"
+                required
+                />
+                <i class="fas fa-eye toggle-password" data-target="senha"></i>
+                <span class="error" id="senha-error"></span>
+            </div>
+
+            <div class="input-box password-box">
+                <label for="confirmar_senha">Confirmar Senha:</label>
+                <input
+                type="password"
+                id="confirmar_senha"
+                name="confirmar_senha"
+                placeholder="Confirme sua senha"
+                required
+                />
+                <i
+                class="fas fa-eye toggle-password"
+                data-target="confirmar_senha"
+                ></i>
+                <span class="error" id="confirmar_senha-error"></span>
+            </div>
+
+            </div>
+        </fieldset>
+    </form>
         <div class="input-box buttons-container">
             <input type="submit" value="Enviar" />
             <input type="reset" value="Limpar" />
