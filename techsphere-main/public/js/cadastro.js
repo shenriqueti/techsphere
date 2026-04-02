@@ -94,6 +94,31 @@ function validateField(id, errorId, message, condition) {
     return true;
 }
 
+function buscarCEP() {
+    const cep = document.getElementById('cep').value.replace(/\D/g, '');
+
+    if (cep.length !== 8) return;
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.erro) {
+                showError('cep-error', 'CEP não encontrado.');
+                return;
+            }
+
+            document.getElementById('rua').value = data.logradouro;
+            document.getElementById('bairro').value = data.bairro;
+            document.getElementById('cidade').value = data.localidade;
+            document.getElementById('estado').value = data.uf;
+        })
+        .catch(() => {
+            showError('cep-error', 'Erro ao buscar CEP.');
+        });
+}
+
+document.getElementById('cep').addEventListener('blur', buscarCEP);
+
 function validateNome() {
     return validateField('nome', 'nome-error', 'Nome deve ter pelo menos 2 caracteres.', v => v.trim().length >= 2);
 }
