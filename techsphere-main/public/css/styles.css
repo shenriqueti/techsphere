@@ -711,22 +711,24 @@ body.light-theme .modal {
 
 .genero-box {
   margin-top: 1rem;
+  
 }
 
 .radio-opcao {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+ display: flex;
+  gap: 1rem;
 }
+
 
 .radio-opcao input[type="radio"] {
   accent-color: var(--cor-neon-azul);
+  
 }
 
 .radio-opcao label {
   color: var(--cor-texto-secundario);
   cursor: pointer;
+  
 }
 
 

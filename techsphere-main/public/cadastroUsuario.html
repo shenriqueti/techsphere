@@ -125,28 +125,28 @@
 
             <div class="input-box genero-box">
               <label>Gênero:</label>
-              <div class="radio-opcao">
-                <input
-                  type="radio"
-                  id="masculino"
-                  name="genero"
-                  value="masculino"
-                  required
-                />
-                <label for="masculino">Masculino</label>
+
+              <div class="radio-group">
+                <div class="radio-opcao">
+                  <input type="radio" id="masculino" name="genero" value="masculino" required />
+                  <label for="masculino">Masculino</label>
+                </div>
+
+                <div class="radio-opcao">
+                  <input type="radio" id="feminino" name="genero" value="feminino" required />
+                  <label for="feminino">Feminino</label>
+                </div>
               </div>
-              <div class="radio-opcao">
-                <input
-                  type="radio"
-                  id="feminino"
-                  name="genero"
-                  value="feminino"
-                  required
-                />
-                <label for="feminino">Feminino</label>
-              </div>
+
               <span class="error" id="genero-error"></span>
             </div>
+
+            </div>
+        </fieldset>
+      </form>
+      <form id="form" autocomplete="off" method="post">
+        <fieldset class="grupo">
+          <div class="form-grid">
 
             <div class="linha-dupla">
               <div class="input-box">
@@ -159,7 +159,7 @@
                   required
                 />
                 <span class="error" id="cep-error"></span>
-              </div>
+            </div>
 
               <div class="input-box">
                 <label for="numero">Número:</label>
@@ -236,6 +236,14 @@
               </div>
             </div>
 
+          </div>
+        </fieldset>
+      </form>
+
+      <form id="form" autocomplete="off" method="post">
+        <fieldset class="grupo">
+          <div class="form-grid">
+
             <div class="input-box">
               <label for="login">Login:</label>
               <input
@@ -277,13 +285,15 @@
               <span class="error" id="confirmar_senha-error"></span>
             </div>
 
+          </div>
+        </fieldset>
+      </form> 
+
             <div class="input-box buttons-container">
               <input type="submit" value="Enviar" />
               <input type="reset" value="Limpar" />
             </div>
-          </div>
-        </fieldset>
-      </form>
+          
 
       <button id="back-to-top" title="Voltar ao topo">↑</button>
 
