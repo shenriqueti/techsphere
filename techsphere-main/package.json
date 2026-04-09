@@ -1,0 +1,24 @@
+{
+  "name": "techsphere",
+  "version": "1.0.0",
+  "description": "Este projeto simula uma plataforma web para um evento de tecnologia, desenvolvido como parte do projeto final das disciplinas de Gestão de Tecnologia da informação e Análise de Sistemas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shenriqueti/techsphere.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shenriqueti/techsphere/issues"
+  },
+  "homepage": "https://github.com/shenriqueti/techsphere#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
