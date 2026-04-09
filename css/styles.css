@@ -384,7 +384,7 @@ body.light-theme #theme-toggle .fa-sun {
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-  margin-top: auto;
+  margin-top: 20px;
   text-decoration: none;
   display: inline-block;
 }
