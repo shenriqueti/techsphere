@@ -199,3 +199,39 @@ document.addEventListener('DOMContentLoaded', function() {
     closeButtonExit.addEventListener('click', () => fecharModal('modalExitIntent'));
   }
 });
+
+
+//BARRA DE PESQUISAR EVENTOS
+
+// ── Pesquisa de Eventos ──
+const inputBusca = document.getElementById('busca-evento');
+const btnClear   = document.getElementById('search-clear');
+const contagem   = document.getElementById('search-results-count');
+
+inputBusca.addEventListener('input', filtrarPorBusca);
+
+btnClear.addEventListener('click', () => {
+  inputBusca.value = '';
+  filtrarPorBusca();
+  inputBusca.focus();
+});
+
+function filtrarPorBusca() {
+  const q = inputBusca.value.trim().toLowerCase();
+  btnClear.style.display = q ? 'block' : 'none';
+
+  const cards = document.querySelectorAll('.card');
+  let visiveis = 0;
+
+  cards.forEach(card => {
+    const texto = card.innerText.toLowerCase();
+    const visivel = !q || texto.includes(q);
+    card.style.display = visivel ? '' : 'none';
+    if (visivel) visiveis++;
+  });
+
+  contagem.textContent = q
+    ? `${visiveis} evento(s) encontrado(s)`
+    : '';
+  contagem.style.color = visiveis > 0 ? '#6c63ff' : '#e24b4a';
+}

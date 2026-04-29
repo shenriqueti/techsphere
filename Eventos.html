@@ -47,7 +47,23 @@
           Aqui você encontra os melhores eventos de Tecnologia do Brasil.
         </p>
 
-         <div class="filtros">
+                <!-- BARRA DE PESQUISA -->
+        <div class="search-container">
+          <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              class="search-input"
+              id="busca-evento"
+              type="text"
+              placeholder="Pesquisar eventos, workshops, palestras..."
+              autocomplete="off"
+            />
+            <button class="search-clear" id="search-clear" title="Limpar">✕</button>
+          </div>
+        </div>
+        <p class="search-results-count" id="search-results-count"></p>
+
+        <div class="filtros">
           <button data-filter="all">Todos</button>
           <button data-filter="evento">Eventos</button>
           <button data-filter="palestra">Palestras</button>

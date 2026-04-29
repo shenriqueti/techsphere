@@ -434,7 +434,64 @@ body.light-theme #theme-toggle .fa-sun {
   border-color: var(--cor-neon-azul);
   font-weight: 700;
 }
+/* ========================================= */
+/* 7. MODAIS                                 */
+/* ========================================= */
+/* ── Barra de Pesquisa ── */
+.search-container { margin-bottom: 1rem; }
 
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg, #1a1a1a);
+  border: 1px solid var(--border-color, #2e2e2e);
+  border-radius: 50px;
+  padding: 0 1.25rem;
+  gap: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-wrapper:focus-within {
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.18);
+}
+
+.search-icon { color: #888; font-size: 14px; flex-shrink: 0; }
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-color, #f0f0f0);
+  padding: 13px 0;
+}
+.search-input::placeholder { color: #666; }
+
+.search-clear {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  font-size: 14px;
+  display: none;
+  padding: 4px;
+  border-radius: 50%;
+  transition: color 0.15s;
+}
+.search-clear:hover { color: #f0f0f0; }
+
+.search-results-count {
+  text-align: center;
+  font-size: 12px;
+  min-height: 20px;
+  margin-bottom: 0.5rem;
+  color: #6c63ff;
+}
 /* ========================================= */
 /* 8. MODAIS                                 */
 /* ========================================= */
