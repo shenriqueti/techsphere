@@ -1,6 +1,8 @@
 const express = require('express'); // Esse framework serve para criar servidores e APIs no Node.js de forma fácil.
 const cors = require('cors'); // Permite que um site acesse outro site
 const admin = require('firebase-admin'); //É a biblioteca oficial do Firebase para Node.js (Com ele a gente consegue:Salvar dados no Firestore,Autenticar usuários e Gerenciar banco)
+const path = require('path');
+
 
 //Configuração do Firebase Admin
 const serviceAccount = require("./serviceAccountKey.json");
@@ -16,6 +18,62 @@ const db = admin.firestore(); // Cria a conexão com o banco Firestore (onde voc
 // Middleware
 app.use(cors()); // Permite que o Frontend acesse a API
 app.use(express.json()); // Permite que o servidor entenda dados em formato JSON enviados nas requisições (ex: fetch do frontend)
+// Libera os arquivos estáticos (HTML, CSS, JS, Imagens) da pasta public
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rota principal: quando acessar localhost:3000, abre o index.html direto
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// ROTA GET: Busca os dados de um usuário específico na coleção 'cadastro'
+app.get('/api/meus-dados/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        
+        // Busca o documento pelo ID na coleção 'cadastro'
+        const docRef = db.collection('cadastro').doc(userId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+        
+        // Retorna os dados do documento
+        res.status(200).json({
+            id: doc.id,
+            ...doc.data()
+        });
+        
+    } catch (error) {
+        console.error('Erro ao buscar dados do usuário:', error);
+        res.status(500).json({ message: 'Erro ao buscar dados do usuário' });
+    }
+});
+
+// ROTA PUT: Atualiza os dados de um usuário específico (ou cria se não existir)
+app.put('/api/meus-dados/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const dadosAtualizados = req.body;
+        
+        // Remove campos que não devem ser atualizados
+        delete dadosAtualizados.criadoEm;
+        delete dadosAtualizados.confirmar_senha;
+        
+        // Adiciona data da última atualização
+        dadosAtualizados.atualizadoEm = new Date();
+        
+        // Usa set com merge para criar ou atualizar o documento
+        await db.collection('cadastro').doc(userId).set(dadosAtualizados, { merge: true });
+        
+        res.status(200).json({ message: 'Dados atualizados com sucesso!' });
+        
+    } catch (error) {
+        console.error('Erro ao atualizar dados do usuário:', error);
+        res.status(500).json({ message: 'Erro ao atualizar dados do usuário' });
+    }
+});
 
  // ROTA POST: Recebe os dados do formulário e salva no Firebase
 app.post('/api/cadastro', async (req,res) => {
