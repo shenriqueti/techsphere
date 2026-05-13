@@ -1,7 +1,7 @@
 {
   "name": "techsphere-main",
   "version": "1.0.0",
-  "description": "",
+  "description": "Este projeto simula uma plataforma web para um evento de tecnologia, desenvolvido como parte do projeto final das disciplinas de Gestão de Tecnologia da informação e Análise de Sistemas.",
   "main": "server.js",
   "dependencies": {
     "abort-controller": "^3.0.0",
@@ -202,7 +202,8 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "dev":"nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -210,5 +211,13 @@
   "type": "commonjs",
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shenriqueti/techsphere.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shenriqueti/techsphere/issues"
+  },
+  "homepage": "https://github.com/shenriqueti/techsphere#readme"
 }
