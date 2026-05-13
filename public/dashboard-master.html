@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard Administrativo - TechSphere</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <style>
+      /* Estilos específicos do Dashboard */
+      .dashboard-section {
+        padding: 2rem;
+        background: var(--cor-fundo-card);
+        border: 1px solid var(--cor-borda);
+        border-radius: 16px;
+        margin-bottom: 2rem;
+      }
+
+      .search-bar {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .search-bar input[type="text"] {
+        flex: 1;
+        min-width: 250px;
+        background: var(--cor-fundo);
+        border: 1px solid var(--cor-borda);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: var(--cor-texto-principal);
+        font-family: inherit;
+        font-size: 1rem;
+      }
+
+      .search-bar input[type="text"]:focus {
+        border-color: var(--cor-neon-azul);
+        box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+        outline: none;
+      }
+
+      .search-bar .btn-buscar {
+        background: var(--cor-neon-azul);
+        color: var(--cor-fundo);
+        border: 1px solid var(--cor-neon-azul);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.9rem;
+        font-family: inherit;
+        transition: all 0.3s ease;
+      }
+
+      .search-bar .btn-buscar:hover {
+        background: transparent;
+        color: var(--cor-neon-azul);
+        box-shadow: var(--sombra-neon-azul);
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        color: var(--cor-texto-principal);
+        font-size: 0.95rem;
+      }
+
+      table thead th {
+        background: var(--cor-fundo);
+        border-bottom: 2px solid var(--cor-neon-azul);
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        color: var(--cor-neon-azul);
+        white-space: nowrap;
+      }
+
+      table tbody td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--cor-borda);
+        vertical-align: middle;
+      }
+
+      table tbody tr:hover {
+        background: rgba(0, 191, 255, 0.05);
+      }
+
+      .btn-excluir {
+        background: transparent;
+        border: 1px solid #ff4444;
+        color: #ff4444;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-family: inherit;
+        margin-right: 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-excluir:hover {
+        background: #ff4444;
+        color: #fff;
+        box-shadow: 0 0 12px rgba(255, 68, 68, 0.5);
+      }
+
+      .btn-logs {
+        background: var(--cor-neon-azul);
+        color: var(--cor-fundo);
+        border: 1px solid var(--cor-neon-azul);
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 700;
+        font-family: inherit;
+        transition: all 0.3s ease;
+      }
+
+      .btn-logs:hover {
+        background: transparent;
+        color: var(--cor-neon-azul);
+        box-shadow: var(--sombra-neon-azul);
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-section {
+          padding: 1rem;
+        }
+
+        table thead th,
+        table tbody td {
+          padding: 0.75rem 0.5rem;
+          font-size: 0.85rem;
+        }
+
+        .btn-excluir,
+        .btn-logs {
+          padding: 0.4rem 0.6rem;
+          font-size: 0.75rem;
+          margin-bottom: 0.25rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="container-cabecalho">
+        <div class="container-logo">
+          <a href="index.html"><div class="logo">TS</div></a>
+          <div class="conteudo-logo">
+            <div class="titulo-logo">TechSphere</div>
+            <p class="texto-logo">Festival de Inovação & Tecnologia</p>
+          </div>
+        </div>
+
+        <nav class="menu">
+          <a href="index.html">Home</a>
+          <a
+            href="dashboard-master.html"
+            style="color: var(--cor-neon-azul);"
+            >Dashboard</a
+          >
+          <a href="#contato">Contato</a>
+          <button id="theme-toggle" aria-label="Alterar tema">
+            <i class="fas fa-moon"></i><i class="fas fa-sun"></i>
+          </button>
+        </nav>
+
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </header>
+
+      <div class="titulo">
+        <h1>Dashboard Administrativo - Perfil Master</h1>
+      </div>
+
+      <section class="dashboard-section">
+        <!-- Barra de Busca -->
+        <div class="search-bar">
+          <input
+            type="text"
+            id="searchInput"
+            name="search"
+            placeholder="Buscar usuário por nome ou e-mail..."
+          />
+          <button type="button" class="btn-buscar">Buscar</button>
+        </div>
+
+        <!-- Tabela de Usuários -->
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Perfil</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sergio Henrique Silva</td>
+                <td>sergio.silva@email.com</td>
+                <td>Administrador</td>
+                <td>
+                  <button type="button" class="btn-excluir">Excluir</button>
+                  <button type="button" class="btn-logs">
+                    Ver Logs de Auditoria
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Giovanna Amorim</td>
+                <td>giovanna.amorim@email.com</td>
+                <td>Usuário</td>
+                <td>
+                  <button type="button" class="btn-excluir">Excluir</button>
+                  <button type="button" class="btn-logs">
+                    Ver Logs de Auditoria
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Mylenna Oliveira</td>
+                <td>mylenna.oliveira@email.com</td>
+                <td>Moderador</td>
+                <td>
+                  <button type="button" class="btn-excluir">Excluir</button>
+                  <button type="button" class="btn-logs">
+                    Ver Logs de Auditoria
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <button id="back-to-top" title="Voltar ao topo">↑</button>
+
+      <footer class="footer" id="contato">
+        <div class="container">
+          <div class="patrocinadores-master">
+            <h3 class="Titulo">Patrocinador Master</h3>
+            <a href="https://www.itau.com.br/" target="_blank"
+              ><img src="images/itau-10.png" alt="Logo do Itaú"
+            /></a>
+          </div>
+
+          <div class="patrocinadores">
+            <h3 class="Titulo">Patrocinadores</h3>
+            <div class="logos-grid">
+              <div class="logos">
+                <a href="https://www.apple.com/br/store" target="_blank"
+                  ><img src="images/applebranca.png" alt="Logo Apple"
+                /></a>
+              </div>
+              <div class="logos">
+                <a href="https://www.coca-cola.com/br/pt" target="_blank"
+                  ><img src="images/coca-cola-1.png" alt="Logo Coca-Cola"
+                /></a>
+              </div>
+              <div class="logos">
+                <a
+                  href="https://about.google/intl/pt_ALL/company-info/"
+                  target="_blank"
+                  ><img src="images/google-logo-about.svg" alt="Logo Google"
+                /></a>
+              </div>
+              <div class="logos">
+                <a href="https://www.redbull.com/br-pt" target="_blank"
+                  ><img
+                    src="images/redbullcom-logo_double-with-text.svg"
+                    alt="Logo Red Bull"
+                /></a>
+              </div>
+              <div class="logos">
+                <a href="https://www.unisuam.edu.br/" target="_blank"
+                  ><img src="images/unisuam.png" alt="Logo Unisuam"
+                /></a>
+              </div>
+              <div class="logos">
+                <a href="https://www.tim.com.br/rj" target="_blank"
+                  ><img src="images/tim.svg" alt="Logo Tim"
+                /></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-icons">
+            <a
+              href="https://www.instagram.com/unisuam/"
+              target="_blank"
+              aria-label="Visite nosso Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.facebook.com/UNISUAM/?locale=pt_BR"
+              target="_blank"
+              aria-label="Visite nosso Facebook"
+              ><i class="fab fa-facebook"></i
+            ></a>
+            <a
+              href="https://x.com/unisuam_mais"
+              target="_blank"
+              aria-label="Visite nosso Twitter"
+              ><i class="fab fa-twitter"></i
+            ></a>
+          </div>
+          <p>
+            &copy; 2025 TechSphere, conectando o futuro da tecnologia no Brasil
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const backToTopButton = document.getElementById("back-to-top");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopButton.style.display = "block";
+        } else {
+          backToTopButton.style.display = "none";
+        }
+      });
+
+      backToTopButton.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    </script>
+
+    <script>
+      // funcionalide de togglar pro tema
+      const themeToggle = document.getElementById("theme-toggle");
+      const body = document.body;
+
+      // carregar o tema salvo no f5
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "light") {
+        body.classList.add("light-theme");
+      }
+
+      // togglar o tema no click
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("light-theme");
+        const currentTheme = body.classList.contains("light-theme")
+          ? "light"
+          : "dark";
+        localStorage.setItem("theme", currentTheme);
+      });
+    </script>
+
+    <script>
+      // funcionalidade do menu hamburger
+      const menuToggle = document.getElementById("menu-toggle");
+      const menu = document.querySelector(".menu");
+
+      menuToggle.addEventListener("click", () => {
+        menu.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>
