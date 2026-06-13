@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard Administrativo - TechSphere</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      .dashboard-section {
+        padding: 2rem;
+        background: var(--cor-fundo-card);
+        border: 1px solid var(--cor-borda);
+        border-radius: 16px;
+        margin-bottom: 2rem;
+      }
+      .search-bar {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+      .search-bar input[type="text"] {
+        flex: 1;
+        min-width: 250px;
+        background: var(--cor-fundo);
+        border: 1px solid var(--cor-borda);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: var(--cor-texto-principal);
+        font-family: inherit;
+        font-size: 1rem;
+      }
+      .search-bar input:focus { border-color: var(--cor-neon-azul); outline: none; box-shadow: 0 0 10px rgba(0,191,255,0.3); }
+      .btn-buscar, .btn-logs-geral {
+        background: var(--cor-neon-azul);
+        color: var(--cor-fundo);
+        border: 1px solid var(--cor-neon-azul);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.9rem;
+        font-family: inherit;
+        transition: all 0.3s ease;
+      }
+      .btn-buscar:hover, .btn-logs-geral:hover { background: transparent; color: var(--cor-neon-azul); box-shadow: var(--sombra-neon-azul); }
+      .table-wrapper { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; color: var(--cor-texto-principal); font-size: 0.95rem; }
+      table thead th {
+        background: var(--cor-fundo);
+        border-bottom: 2px solid var(--cor-neon-azul);
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        color: var(--cor-neon-azul);
+        white-space: nowrap;
+      }
+      table tbody td { padding: 1rem; border-bottom: 1px solid var(--cor-borda); vertical-align: middle; }
+      table tbody tr:hover { background: rgba(0,191,255,0.05); }
+      .btn-excluir {
+        background: transparent; border: 1px solid #ff4444; color: #ff4444;
+        padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem;
+        font-family: inherit; margin-right: 0.5rem; transition: all 0.3s ease;
+      }
+      .btn-excluir:hover { background: #ff4444; color: #fff; box-shadow: 0 0 12px rgba(255,68,68,0.5); }
+      .empty-state { text-align: center; padding: 2rem; color: var(--cor-texto-secundario); }
+      .tab-buttons { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+      .tab-btn {
+        padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer; font-family: inherit;
+        font-weight: 600; font-size: 0.9rem; transition: all 0.2s;
+        border: 1px solid var(--cor-borda); background: transparent; color: var(--cor-texto-principal);
+      }
+      .tab-btn.active { background: var(--cor-neon-azul); color: var(--cor-fundo); border-color: var(--cor-neon-azul); }
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+      .badge-sucesso { color: #00bf7f; font-weight: 700; }
+      .badge-falha { color: #ff4444; font-weight: 700; }
+      .toast {
+        position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem;
+        border-radius: 8px; font-weight: 600; z-index: 9999; display: none;
+      }
+      .toast.erro { background: #ff4444; color: #fff; }
+      .toast.sucesso { background: #00bf7f; color: #fff; }
+      /* Modal */
+      .modal-overlay {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+        display: none; align-items: center; justify-content: center; z-index: 1000;
+      }
+      .modal-overlay.active { display: flex; }
+      .modal-box {
+        background: var(--cor-fundo-card); border: 1px solid var(--cor-borda);
+        border-radius: 16px; padding: 2rem; max-width: 400px; width: 90%; text-align: center;
+      }
+      .modal-box h3 { margin-bottom: 1rem; }
+      .modal-box .modal-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+      .btn-cancel { padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid #666; background: transparent; color: var(--cor-texto-principal); cursor: pointer; font-family: inherit; }
+      .btn-confirm-del { padding: 0.6rem 1.2rem; border-radius: 8px; border: none; background: #ff4444; color: #fff; font-weight: 700; cursor: pointer; font-family: inherit; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="container-cabecalho">
+        <div class="container-logo">
+          <a href="index.html"><div class="logo">TS</div></a>
+          <div class="conteudo-logo">
+            <div class="titulo-logo">TechSphere</div>
+            <p class="texto-logo">Festival de Inovação & Tecnologia</p>
+          </div>
+        </div>
+        <nav class="menu">
+          <a href="index.html">Home</a>
+          <a href="dashboard-master.html" style="color: var(--cor-neon-azul);">Dashboard</a>
+          <button id="logoutBtn" style="background:none;border:none;color:var(--cor-neon-azul);cursor:pointer;font-family:inherit;font-size:1rem;">Sair</button>
+          <button id="theme-toggle" aria-label="Alterar tema">
+            <i class="fas fa-moon"></i><i class="fas fa-sun"></i>
+          </button>
+        </nav>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <div class="titulo">
+        <h1>Dashboard Administrativo — Perfil Master</h1>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="usuarios">Usuários</button>
+        <button class="tab-btn" data-tab="logs">Logs de Autenticação</button>
+      </div>
+
+      <!-- Tab: Usuários -->
+      <div id="tab-usuarios" class="tab-content active">
+        <section class="dashboard-section">
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar usuário por nome (busca parcial)..." />
+            <button type="button" class="btn-buscar" id="btnBuscar">Buscar</button>
+          </div>
+          <div class="table-wrapper">
+            <table id="tabelaUsuarios">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Login</th>
+                  <th>E-mail</th>
+                  <th>CPF</th>
+                  <th>Cadastrado em</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyUsuarios">
+                <tr><td colspan="6" class="empty-state">Carregando usuários...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- Tab: Logs -->
+      <div id="tab-logs" class="tab-content">
+        <section class="dashboard-section">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data/Hora</th>
+                  <th>Login</th>
+                  <th>Desafio 2FA</th>
+                  <th>Resultado</th>
+                  <th>Perfil</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyLogs">
+                <tr><td colspan="5" class="empty-state">Carregando logs...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- Modal de confirmação de exclusão -->
+      <div class="modal-overlay" id="modalExcluir">
+        <div class="modal-box">
+          <h3>Confirmar Exclusão</h3>
+          <p id="modalExcluirNome">Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita.</p>
+          <div class="modal-actions">
+            <button class="btn-cancel" id="btnCancelarExclusao">Cancelar</button>
+            <button class="btn-confirm-del" id="btnConfirmarExclusao">Excluir</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="toast" class="toast"></div>
+      <button id="back-to-top" title="Voltar ao topo">↑</button>
+
+      <footer class="footer" id="contato">
+        <div class="container">
+          <p>&copy; 2025 TechSphere, conectando o futuro da tecnologia no Brasil</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // ── Verificar sessão Master ──
+      const userId = sessionStorage.getItem('loggedUserId');
+      const perfil = sessionStorage.getItem('loggedPerfil');
+      if (!userId || perfil !== 'master') {
+        window.location.href = 'login.html';
+      }
+
+      // ── Toast ──
+      function showToast(msg, tipo = 'erro') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast ' + tipo;
+        t.style.display = 'block';
+        setTimeout(() => { t.style.display = 'none'; }, 3500);
+      }
+
+      // ── Logout ──
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+      });
+
+      // ── Tema ──
+      const themeToggle = document.getElementById('theme-toggle');
+      if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme');
+      themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+      });
+
+      // ── Menu hamburger ──
+      document.getElementById('menu-toggle').addEventListener('click', () => {
+        document.querySelector('.menu').classList.toggle('active');
+      });
+
+      // ── Back to top ──
+      const btt = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => { btt.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+      btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // ── Tabs ──
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+          if (btn.dataset.tab === 'logs') carregarLogs();
+        });
+      });
+
+      // ── Carregar usuários ──
+      async function carregarUsuarios(busca = '') {
+        const tbody = document.getElementById('tbodyUsuarios');
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Carregando...</td></tr>';
+        try {
+          const url = busca ? `/api/usuarios?busca=${encodeURIComponent(busca)}` : '/api/usuarios';
+          const resp = await fetch(url, {
+            headers: {
+              'x-user-id': sessionStorage.getItem('loggedUserId') || '',
+              'x-user-perfil': sessionStorage.getItem('loggedPerfil') || ''
+            }
+          });
+          const usuarios = await resp.json();
+
+          if (!usuarios.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Nenhum usuário encontrado.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = usuarios.map(u => {
+            const data = u.criadoEm ? new Date(u.criadoEm._seconds * 1000).toLocaleDateString('pt-BR') : '—';
+            return `<tr>
+              <td>${escHtml(u.nome || '—')}</td>
+              <td>${escHtml(u.login || '—')}</td>
+              <td>${escHtml(u.email || '—')}</td>
+              <td>${escHtml(u.cpf || '—')}</td>
+              <td>${data}</td>
+              <td>
+                <button type="button" class="btn-excluir" data-id="${u.id}" data-nome="${escHtml(u.nome || '')}">Excluir</button>
+              </td>
+            </tr>`;
+          }).join('');
+
+          // Botões de excluir
+          tbody.querySelectorAll('.btn-excluir').forEach(btn => {
+            btn.addEventListener('click', () => confirmarExclusao(btn.dataset.id, btn.dataset.nome));
+          });
+
+        } catch (err) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Erro ao carregar usuários.</td></tr>';
+        }
+      }
+
+      function escHtml(str) {
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      document.getElementById('btnBuscar').addEventListener('click', () => {
+        carregarUsuarios(document.getElementById('searchInput').value.trim());
+      });
+      document.getElementById('searchInput').addEventListener('keypress', e => {
+        if (e.key === 'Enter') carregarUsuarios(document.getElementById('searchInput').value.trim());
+      });
+
+      // ── Modal de exclusão ──
+      let idParaExcluir = null;
+      function confirmarExclusao(id, nome) {
+        idParaExcluir = id;
+        document.getElementById('modalExcluirNome').textContent = `Excluir o usuário "${nome}"? Esta ação não pode ser desfeita.`;
+        document.getElementById('modalExcluir').classList.add('active');
+      }
+      document.getElementById('btnCancelarExclusao').addEventListener('click', () => {
+        document.getElementById('modalExcluir').classList.remove('active');
+        idParaExcluir = null;
+      });
+      document.getElementById('btnConfirmarExclusao').addEventListener('click', async () => {
+        if (!idParaExcluir) return;
+        try {
+          const resp = await fetch(`/api/usuarios/${idParaExcluir}`, {
+            method: 'DELETE',
+            headers: {
+              'x-user-id': sessionStorage.getItem('loggedUserId') || '',
+              'x-user-perfil': sessionStorage.getItem('loggedPerfil') || ''
+            }
+          });
+          const dados = await resp.json();
+          if (resp.ok) {
+            showToast('Usuário excluído com sucesso.', 'sucesso');
+            carregarUsuarios(document.getElementById('searchInput').value.trim());
+          } else {
+            showToast(dados.message || 'Erro ao excluir.');
+          }
+        } catch (err) {
+          showToast('Erro ao conectar com o servidor.');
+        } finally {
+          document.getElementById('modalExcluir').classList.remove('active');
+          idParaExcluir = null;
+        }
+      });
+
+      // ── Carregar logs ──
+      async function carregarLogs() {
+        const tbody = document.getElementById('tbodyLogs');
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Carregando logs...</td></tr>';
+        try {
+          const resp = await fetch('/api/logs', {
+            headers: {
+              'x-user-id': sessionStorage.getItem('loggedUserId') || '',
+              'x-user-perfil': sessionStorage.getItem('loggedPerfil') || ''
+            }
+          });
+          const logs = await resp.json();
+
+          if (!logs.length) {
+            tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhum log encontrado.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = logs.map(log => {
+            let dataHora = '—';
+            if (log.data_hora) {
+              const d = log.data_hora._seconds ? new Date(log.data_hora._seconds * 1000) : new Date(log.data_hora);
+              dataHora = d.toLocaleString('pt-BR');
+            }
+            const resultado = log.sucesso
+              ? '<span class="badge-sucesso">✓ Sucesso</span>'
+              : '<span class="badge-falha">✗ Falhou</span>';
+            return `<tr>
+              <td>${dataHora}</td>
+              <td>${escHtml(log.login || '—')}</td>
+              <td>${escHtml(log.desafio_2fa || '—')}</td>
+              <td>${resultado}</td>
+              <td>${escHtml(log.perfil || '—')}</td>
+            </tr>`;
+          }).join('');
+        } catch (err) {
+          tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Erro ao carregar logs.</td></tr>';
+        }
+      }
+
+      // ── Iniciar ──
+      carregarUsuarios();
+    </script>
+  </body>
+</html>

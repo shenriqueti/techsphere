@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Validação de Segurança - TechSphere</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+      .alerta-bloqueio {
+        background: #ff4444;
+        color: #fff;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 1rem;
+        display: none;
+      }
+      .tentativas-badge {
+        font-weight: bold;
+        color: #ff4444;
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+        display: block;
+        text-align: center;
+      }
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        z-index: 9999;
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+      .toast.erro { background: #ff4444; color: #fff; }
+      .toast.sucesso { background: #00bf7f; color: #fff; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="container-cabecalho">
+        <div class="container-logo">
+          <a href="index.html"><div class="logo">TS</div></a>
+          <div class="conteudo-logo">
+            <div class="titulo-logo">TechSphere</div>
+            <p class="texto-logo">Festival de Inovação & Tecnologia</p>
+          </div>
+        </div>
+        <nav class="menu">
+          <a href="index.html">Home</a>
+          <a href="login.html">Login</a>
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle" onclick="return false;">Cadastre-se</a>
+            <div class="dropdown-menu">
+              <a href="cadastroUsuario.html">Usuário</a>
+              <a href="cadastroEmpresa.html">Empresa</a>
+              <a href="cadastroEvento.html">Evento</a>
+            </div>
+          </div>
+          <a href="Eventos.html">Eventos</a>
+          <button id="theme-toggle" aria-label="Alterar tema">
+            <i class="fas fa-moon"></i><i class="fas fa-sun"></i>
+          </button>
+        </nav>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <div class="titulo">
+        <h1>Validação de Segurança</h1>
+      </div>
+
+      <div id="alerta-bloqueio" class="alerta-bloqueio">
+        ⚠️ Sua conta foi bloqueada por excesso de tentativas incorretas. Entre em contato com o suporte.
+      </div>
+
+      <form id="2faForm" autocomplete="off">
+        <fieldset class="grupo">
+          <div class="input-group" style="text-align: center;">
+            <p style="color: var(--cor-texto-secundario); margin-bottom: 1.5rem; font-size: 1.1rem;">
+              Segundo Fator de Autenticação (2FA)
+            </p>
+
+            <div class="input-box" style="max-width: 420px; margin: 0 auto;">
+              <label for="resposta2fa" id="labelDesafio">Carregando desafio...</label><br />
+              <input
+                type="text"
+                id="resposta2fa"
+                name="resposta2fa"
+                placeholder="Digite sua resposta"
+                required
+                style="margin-top: 0.5rem;"
+              /><br /><br />
+            </div>
+
+            <span id="tentativas-badge" class="tentativas-badge">Tentativas restantes: 3</span>
+
+            <div class="input-box" style="max-width: 420px; margin: 0 auto;">
+              <input type="button" id="confirmBtn" value="Confirmar" />
+            </div>
+
+            <div style="text-align: center; margin-top: 1rem">
+              <a href="login.html" style="color: var(--cor-neon-azul); text-decoration: none;">
+                ← Voltar para o Login
+              </a>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <div id="toast" class="toast"></div>
+
+      <button id="back-to-top" title="Voltar ao topo">↑</button>
+
+      <footer class="footer" id="contato">
+        <div class="container">
+          <p>&copy; 2025 TechSphere, conectando o futuro da tecnologia no Brasil</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // ── Tema ──
+      const themeToggle = document.getElementById('theme-toggle');
+      const body = document.body;
+      if (localStorage.getItem('theme') === 'light') body.classList.add('light-theme');
+      themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-theme');
+        localStorage.setItem('theme', body.classList.contains('light-theme') ? 'light' : 'dark');
+      });
+
+      // ── Menu hamburger ──
+      document.getElementById('menu-toggle').addEventListener('click', () => {
+        document.querySelector('.menu').classList.toggle('active');
+      });
+
+      // ── Back to top ──
+      const backToTopButton = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => {
+        backToTopButton.style.display = window.scrollY > 300 ? 'block' : 'none';
+      });
+      backToTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // ── Toast ──
+      function showToast(msg, tipo = 'erro') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast ' + tipo;
+        t.style.display = 'block';
+        setTimeout(() => { t.style.display = 'none'; }, 3500);
+      }
+
+      // ── Lógica 2FA ──
+      const userId = sessionStorage.getItem('userId');
+      const desafio = sessionStorage.getItem('desafio2FA');
+      const perfil = sessionStorage.getItem('perfil');
+
+      // Se não veio do login, redirecionar
+      if (!userId || !desafio) {
+        window.location.href = 'login.html';
+      }
+
+      // Exibir a pergunta do desafio
+      document.getElementById('labelDesafio').textContent = desafio || 'Qual o CEP cadastrado na sua conta?';
+
+      let tentativasRestantes = 3;
+
+      document.getElementById('confirmBtn').addEventListener('click', async () => {
+        const resposta = document.getElementById('resposta2fa').value.trim();
+        if (!resposta) {
+          showToast('Digite sua resposta antes de confirmar.');
+          return;
+        }
+
+        try {
+          const res = await fetch('/api/2fa', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, resposta })
+          });
+          const dados = await res.json();
+
+          if (dados.sucesso) {
+            showToast('Autenticação concluída! Redirecionando...', 'sucesso');
+
+            // Salvar sessão definitiva
+            sessionStorage.setItem('loggedUserId', userId);
+            sessionStorage.setItem('loggedPerfil', perfil);
+            sessionStorage.setItem('loggedNome', dados.nome || '');
+
+            // Limpar dados temporários de 2FA
+            sessionStorage.removeItem('desafio2FA');
+            sessionStorage.removeItem('campoDsafio');
+
+            setTimeout(() => {
+              if (perfil === 'master') {
+                window.location.href = 'dashboard-master.html';
+              } else {
+                window.location.href = 'area-usuario.html';
+              }
+            }, 1200);
+
+          } else if (dados.bloqueado) {
+            document.getElementById('alerta-bloqueio').style.display = 'block';
+            document.getElementById('confirmBtn').disabled = true;
+            document.getElementById('resposta2fa').disabled = true;
+            document.getElementById('tentativas-badge').textContent = 'Conta bloqueada!';
+            showToast(dados.erro || 'Conta bloqueada.', 'erro');
+
+          } else {
+            tentativasRestantes = dados.tentativasRestantes ?? (tentativasRestantes - 1);
+            document.getElementById('tentativas-badge').textContent = `Tentativas restantes: ${tentativasRestantes}`;
+            showToast(dados.erro || 'Resposta incorreta.');
+            document.getElementById('resposta2fa').value = '';
+          }
+        } catch (err) {
+          console.error(err);
+          showToast('Erro ao conectar com o servidor.');
+        }
+      });
+
+      // Permitir Enter no campo
+      document.getElementById('resposta2fa').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') document.getElementById('confirmBtn').click();
+      });
+    </script>
+  </body>
+</html>

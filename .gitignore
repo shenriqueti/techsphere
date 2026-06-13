@@ -7,3 +7,9 @@ Thumbs.db # Windows
 npm-debug.log*
 
 node_modules/
+<<<<<<< HEAD
+=======
+
+serviceAccountKey.json
+.env
+>>>>>>> feat/meus-dados

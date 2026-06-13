@@ -4,15 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TechSpere.Brasil</title>
-<<<<<<< HEAD
 
     <!-- Estilos -->
     <link rel="stylesheet" href="css/styles.css" />
-=======
-    <!-- Estilos -->
-    <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
->>>>>>> feat/meus-dados
 
     <!--  Biblioteca Inputmask -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.9/inputmask.min.js"></script>
@@ -34,30 +29,20 @@
 
         <nav class="menu">
           <a href="index.html">Home</a>
-          <a href="login.html">Login</a>
-<<<<<<< HEAD
-          <a href="cadastro.html">Cadastre-se</a>
-=======
-          <div class="dropdown">
-            <a href="#" class="dropdown-toggle" onclick="return false;">Cadastre-se</a>
-            <div class="dropdown-menu">
-              <a href="cadastroUsuario.html">Usuário</a>
-              <a href="cadastroEmpresa.html">Empresa</a>
-              <a href="cadastroEvento.html">Evento</a>
-            </div>
-          </div>
+          <a href="login.html" class="btn-nav-cta">Login</a>
+          
           <a href="Eventos.html">Eventos</a>
->>>>>>> feat/meus-dados
-          <a href="#contato">Contato</a>
-          <button id="theme-toggle" aria-label="Alterar tema"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></button>
+          <button id="theme-toggle" aria-label="Alterar tema">
+          <i class="fas fa-moon"></i><i class="fas fa-sun"></i>
+          </button>
         </nav>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </header>
 
-      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
 
       <div class="titulo">
         <h1 id="titulo">Inscreva-se</h1>
@@ -72,11 +57,7 @@
                 type="text"
                 id="nome"
                 name="nome"
-<<<<<<< HEAD
                 placeholder="Digite o nome completo (mínimo 2 caracteres)"
-=======
-                placeholder="Digite o nome completo (entre 15 e 80 caracteres)"
->>>>>>> feat/meus-dados
                 required
               />
               <span class="error" id="nome-error"></span>
@@ -145,28 +126,27 @@
 
             <div class="input-box genero-box">
               <label>Gênero:</label>
-              <div class="radio-opcao">
-                <input
-                  type="radio"
-                  id="masculino"
-                  name="genero"
-                  value="masculino"
-                  required
-                />
-                <label for="masculino">Masculino</label>
+
+              <div class="radio-group">
+                <div class="radio-opcao">
+                  <input type="radio" id="masculino" name="genero" value="masculino" required />
+                  <label for="masculino">Masculino</label>
+                </div>
+
+                <div class="radio-opcao">
+                  <input type="radio" id="feminino" name="genero" value="feminino" required />
+                  <label for="feminino">Feminino</label>
+                </div>
               </div>
-              <div class="radio-opcao">
-                <input
-                  type="radio"
-                  id="feminino"
-                  name="genero"
-                  value="feminino"
-                  required
-                />
-                <label for="feminino">Feminino</label>
-              </div>
+
               <span class="error" id="genero-error"></span>
             </div>
+
+            </div>
+        </fieldset>
+
+        <fieldset class="grupo">
+          <div class="form-grid">
 
             <div class="linha-dupla">
               <div class="input-box">
@@ -179,7 +159,7 @@
                   required
                 />
                 <span class="error" id="cep-error"></span>
-              </div>
+            </div>
 
               <div class="input-box">
                 <label for="numero">Número:</label>
@@ -245,16 +225,44 @@
 
               <div class="input-box">
                 <label for="estado">Estado:</label>
-                <input
-                  type="text"
-                  id="estado"
-                  name="estado"
-                  placeholder="Digite seu estado"
-                  required
-                />
+                <select  id="estado" name="estado" required>
+                    <option value="">Selecione um estado</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
                 <span class="error" id="estado-error"></span>
-              </div>
             </div>
+
+          </div>
+        </fieldset>
+    
+        <fieldset class="grupo">
+          <div class="form-grid">
 
             <div class="input-box">
               <label for="login">Login:</label>
@@ -297,13 +305,16 @@
               <span class="error" id="confirmar_senha-error"></span>
             </div>
 
-            <div class="input-box buttons-container">
-              <input type="submit" value="Enviar" />
-              <input type="reset" value="Limpar" />
-            </div>
           </div>
         </fieldset>
-      </form>
+      
+
+      </form>    
+
+        <div class="form-actions">
+            <input type="submit" value="Enviar" />
+            <input type="reset" value="Limpar" />
+        </div>
 
       <button id="back-to-top" title="Voltar ao topo">↑</button>
 
