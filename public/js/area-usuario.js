@@ -1,148 +1,163 @@
-// Verificar se o usuário está logado (opcional para testes)
-let loggedUser = localStorage.getItem('loggedUser');
-if (!loggedUser) {
-    // Para fins de teste, permite acesso mesmo sem login
-    loggedUser = 'Usuario Teste';
-    console.log('Modo teste: usuário não logado, usando nome padrão.');
+// ── Verificar sessão ──
+const userId = sessionStorage.getItem('loggedUserId');
+const perfil = sessionStorage.getItem('loggedPerfil');
+
+if (!userId) {
+  window.location.href = 'login.html';
 }
 
-// ID do documento no Firestore (temporário para testes)
-const TEST_USER_ID = 'usuario_teste_123';
+// ── Toast ──
+function showToast(msg, tipo = 'erro') {
+  let toast = document.getElementById('toast-area');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast-area';
+    toast.style.cssText = 'position:fixed;bottom:2rem;right:2rem;padding:1rem 1.5rem;border-radius:8px;font-weight:600;z-index:9999;display:none;';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.background = tipo === 'sucesso' ? '#00bf7f' : '#ff4444';
+  toast.style.color = '#fff';
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 3500);
+}
 
-// Elementos do DOM
+// ── Modal de alteração de senha ──
+function abrirModalSenha() {
+  let modal = document.getElementById('modal-senha');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modal-senha';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:1000;';
+    modal.innerHTML = `
+      <div style="background:var(--cor-fundo-card,#1a1a2e);border:1px solid var(--cor-borda,#333);border-radius:16px;padding:2rem;max-width:420px;width:90%;">
+        <h3 style="margin-bottom:1.5rem;">Alterar Senha</h3>
+        <label>Senha atual</label>
+        <input type="password" id="senhaAtual" style="width:100%;padding:0.7rem;margin:0.5rem 0 1rem;border-radius:8px;border:1px solid #444;background:#0a0a1a;color:#fff;" />
+        <label>Nova senha</label>
+        <input type="password" id="novaSenha" style="width:100%;padding:0.7rem;margin:0.5rem 0 1rem;border-radius:8px;border:1px solid #444;background:#0a0a1a;color:#fff;" />
+        <label>Confirmar nova senha</label>
+        <input type="password" id="confirmarNovaSenha" style="width:100%;padding:0.7rem;margin:0.5rem 0 1.5rem;border-radius:8px;border:1px solid #444;background:#0a0a1a;color:#fff;" />
+        <div style="display:flex;gap:1rem;justify-content:flex-end;">
+          <button id="btnCancelarSenha" style="padding:0.6rem 1.2rem;border-radius:8px;border:1px solid #666;background:transparent;color:#fff;cursor:pointer;">Cancelar</button>
+          <button id="btnSalvarSenha" style="padding:0.6rem 1.2rem;border-radius:8px;border:none;background:#00bfff;color:#000;font-weight:700;cursor:pointer;">Salvar</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    document.getElementById('btnCancelarSenha').addEventListener('click', () => { modal.style.display = 'none'; });
+    document.getElementById('btnSalvarSenha').addEventListener('click', alterarSenha);
+  }
+  modal.style.display = 'flex';
+}
+
+async function alterarSenha() {
+  const senhaAtual = document.getElementById('senhaAtual').value;
+  const novaSenha = document.getElementById('novaSenha').value;
+  const confirmarNovaSenha = document.getElementById('confirmarNovaSenha').value;
+
+  if (!senhaAtual || !novaSenha || !confirmarNovaSenha) { showToast('Preencha todos os campos.'); return; }
+  if (novaSenha.length < 8) { showToast('Nova senha deve ter ao menos 8 caracteres.'); return; }
+  if (novaSenha !== confirmarNovaSenha) { showToast('As novas senhas não coincidem.'); return; }
+
+  try {
+    const resp = await fetch(`/api/alterar-senha/${userId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ senhaAtual, novaSenha, confirmarNovaSenha })
+    });
+    const dados = await resp.json();
+    if (resp.ok) {
+      showToast('Senha alterada com sucesso!', 'sucesso');
+      document.getElementById('modal-senha').style.display = 'none';
+    } else {
+      showToast(dados.message || 'Erro ao alterar senha.');
+    }
+  } catch (err) {
+    showToast('Erro ao conectar com o servidor.');
+  }
+}
+
+// ── Carregar dados ──
 const formMeusDados = document.getElementById('form-meus-dados');
 const btnSalvar = document.getElementById('btn-salvar');
 const tituloPrincipal = document.getElementById('titulo-principal');
 
-// Campos do formulário
-const camposFormulario = {
-    nome: document.getElementById('nome'),
-    email: document.getElementById('email'),
-    cpf: document.getElementById('cpf'),
-    celular: document.getElementById('celular')
-};
-
-// Exibir ingressos (simulação)
-const ticketsList = document.getElementById('tickets-list');
-ticketsList.innerHTML = `Você ainda não possui ingressos. <a href="cadastro.html">Comprar Ingressos</a>`;
-
-// Função para atualizar o título principal com o nome do usuário
-function atualizarTituloPrincipal(nomeUsuario) {
-    if (tituloPrincipal) {
-        tituloPrincipal.textContent = `Bem-vindo, ${nomeUsuario}!`;
-    }
-}
-
-// Função para buscar dados do usuário no Firestore
 async function carregarDadosUsuario() {
-    try {
-        btnSalvar.disabled = true;
-        btnSalvar.value = 'Carregando...';
-        
-        const response = await fetch(`/api/meus-dados/${TEST_USER_ID}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+  try {
+    btnSalvar.disabled = true;
+    const response = await fetch(`/api/meus-dados/${userId}`);
+    if (response.status === 404) { showToast('Usuário não encontrado.'); return; }
+    if (!response.ok) throw new Error('Erro ao carregar dados');
 
-        if (response.status === 404) {
-            alert('Usuário não encontrado. Certifique-se de que o documento existe no Firestore.');
-            return;
-        }
+    const dados = await response.json();
+    if (tituloPrincipal && dados.nome) tituloPrincipal.textContent = `Bem-vindo, ${dados.nome}!`;
 
-        if (!response.ok) {
-            throw new Error('Erro ao carregar dados');
-        }
-
-        const dados = await response.json();
-        
-        // Preencher os campos do formulário com os dados do banco
-        if (dados.nome) {
-            camposFormulario.nome.value = dados.nome;
-            // Atualizar título principal com o nome do usuário
-            atualizarTituloPrincipal(dados.nome);
-        }
-        if (dados.email) camposFormulario.email.value = dados.email;
-        if (dados.cpf) camposFormulario.cpf.value = dados.cpf;
-        if (dados.celular) camposFormulario.celular.value = dados.celular;
-
-        console.log('Dados carregados com sucesso:', dados);
-        
-    } catch (error) {
-        console.error('Erro ao carregar dados:', error);
-        alert('Erro ao carregar dados do usuário. Verifique se o servidor está rodando.');
-    } finally {
-        btnSalvar.disabled = false;
-        btnSalvar.value = 'Salvar Alterações';
-    }
+    const campos = ['nome', 'email', 'cpf', 'celular'];
+    campos.forEach(c => {
+      const el = document.getElementById(c);
+      if (el && dados[c]) el.value = dados[c];
+    });
+  } catch (error) {
+    console.error(error);
+    showToast('Erro ao carregar dados. Verifique se o servidor está rodando.');
+  } finally {
+    btnSalvar.disabled = false;
+  }
 }
 
-// Função para atualizar dados do usuário no Firestore
 async function atualizarDadosUsuario(event) {
-    event.preventDefault();
-    
-    // Coletar dados do formulário
-    const dadosAtualizados = {
-        nome: camposFormulario.nome.value.trim(),
-        email: camposFormulario.email.value.trim(),
-        cpf: camposFormulario.cpf.value.trim(),
-        celular: camposFormulario.celular.value.trim()
-    };
-
-    // Validação básica
-    if (!dadosAtualizados.nome || !dadosAtualizados.email || !dadosAtualizados.cpf || !dadosAtualizados.celular) {
-        alert('Por favor, preencha todos os campos.');
-        return;
+  event.preventDefault();
+  const dados = {
+    nome: document.getElementById('nome').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    cpf: document.getElementById('cpf').value.trim(),
+    celular: document.getElementById('celular').value.trim()
+  };
+  if (!dados.nome || !dados.email || !dados.cpf || !dados.celular) {
+    showToast('Preencha todos os campos.'); return;
+  }
+  try {
+    btnSalvar.disabled = true;
+    const response = await fetch(`/api/meus-dados/${userId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dados)
+    });
+    const resultado = await response.json();
+    if (response.ok) {
+      showToast('Dados atualizados com sucesso!', 'sucesso');
+      if (dados.nome && tituloPrincipal) tituloPrincipal.textContent = `Bem-vindo, ${dados.nome}!`;
+    } else {
+      showToast(resultado.message || 'Erro ao atualizar dados.');
     }
-
-    try {
-        btnSalvar.disabled = true;
-        btnSalvar.value = 'Salvando...';
-
-        const response = await fetch(`/api/meus-dados/${TEST_USER_ID}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dadosAtualizados)
-        });
-
-        const resultado = await response.json();
-
-        if (response.ok) {
-            alert('Dados atualizados com sucesso!');
-            console.log('Dados atualizados:', resultado);
-            // Atualizar título principal com o novo nome se foi alterado
-            if (dadosAtualizados.nome) {
-                atualizarTituloPrincipal(dadosAtualizados.nome);
-            }
-        } else {
-            throw new Error(resultado.message || 'Erro ao atualizar dados');
-        }
-
-    } catch (error) {
-        console.error('Erro ao atualizar dados:', error);
-        alert('Erro ao atualizar dados: ' + error.message);
-    } finally {
-        btnSalvar.disabled = false;
-        btnSalvar.value = 'Salvar Alterações';
-    }
+  } catch (err) {
+    showToast('Erro ao conectar com o servidor.');
+  } finally {
+    btnSalvar.disabled = false;
+  }
 }
 
-// Função de logout
 function logout() {
-    localStorage.removeItem('loggedUser');
-    window.location.href = 'login.html';
+  sessionStorage.clear();
+  window.location.href = 'login.html';
 }
 
-// Adicionar evento ao botão de logout
-document.getElementById('logoutBtn').addEventListener('click', logout);
+// ── Adicionar botão de alteração de senha ──
+window.addEventListener('DOMContentLoaded', () => {
+  carregarDadosUsuario();
+  if (formMeusDados) formMeusDados.addEventListener('submit', atualizarDadosUsuario);
+  document.getElementById('logoutBtn').addEventListener('click', logout);
 
-// Adicionar evento de submit no formulário
-if (formMeusDados) {
-    formMeusDados.addEventListener('submit', atualizarDadosUsuario);
-}
-
-// Carregar dados ao iniciar a página
-document.addEventListener('DOMContentLoaded', carregarDadosUsuario);
+  // Inserir botão de trocar senha (apenas perfil Comum)
+  const btnContainer = document.querySelector('.buttons-container');
+  if (btnContainer) {
+    const btnSenha = document.createElement('button');
+    btnSenha.type = 'button';
+    btnSenha.textContent = 'Alterar Senha';
+    btnSenha.className = 'btn-descricao';
+    btnSenha.style.cssText = 'margin-left:1rem;padding:0.8rem 2rem;font-size:1rem;background:transparent;border:1px solid var(--cor-neon-azul,#00bfff);color:var(--cor-neon-azul,#00bfff);';
+    btnSenha.addEventListener('click', abrirModalSenha);
+    btnContainer.appendChild(btnSenha);
+  }
+});

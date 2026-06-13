@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Seu script com defer -->
-    <script src="js/login.js" defer></script>
+    <script src="js/script.js" defer></script>
   </head>
 
   <body>
@@ -26,7 +26,14 @@
 
         <nav class="menu">
           <a href="index.html">Home</a>
-          <a href="cadastro.html" class="btn-nav-cta">Cadastre-se</a>
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle" onclick="return false;">Cadastre-se</a>
+            <div class="dropdown-menu">
+              <a href="cadastroUsuario.html">Usuário</a>
+              <a href="cadastroEmpresa.html">Empresa</a>
+              <a href="cadastroEvento.html">Evento</a>
+            </div>
+          </div>
 
           <button id="theme-toggle" aria-label="Alterar tema">
             <i class="fas fa-moon"></i><i class="fas fa-sun"></i>
@@ -72,7 +79,7 @@
 
         <div class="cards">
           <div class="card" data-category="evento">
-            <img src="./images/Defense Lite.jpg" alt="AI Future Summit." />
+            <img src="./images/cybersecurity.jpg" alt="AI Future Summit." />
             <div class="corpo-card">
               <h3>CURSO SOFTWARE DEFENSE LITE</h3>
               <p>28 mai - 2026 • 09:00 / 17:00</p>
@@ -84,7 +91,7 @@
           </div>
           <div class="card" data-category="evento">
             <img
-              src="./images/II InovafitoBrasil Summit.jpg"
+              src="./images/cybersecurity.jpg"
               alt="Cloud & DevOps Conference."
             />
             <div class="corpo-card">
@@ -97,7 +104,7 @@
             </div>
           </div>
           <div class="card" data-category="evento">
-            <img src="./images/techHub.png" alt="Cybersecurity Day." />
+            <img src="./images/cybersecurity.jpg" alt="Cybersecurity Day." />
             <div class="corpo-card">
               <h3>Tech Hub Conf 2026</h3>
               <p>30 mai - 2026 • 08:30 / 19:00</p>
@@ -109,7 +116,7 @@
           </div>
           <div class="card" data-category="palestra">
             <img
-              src="./images/DataCenter.png"
+              src="./images/cybersecurity.jpg"
               alt="Palestra IA no Futuro."
             />
             <div class="corpo-card">
@@ -123,7 +130,7 @@
           </div>
           <div class="card" data-category="workshop">
             <img
-              src="./images/RPA&AI.png"
+              src="./images/cybersecurity.jpg"
               alt="Workshop Hands-on em Cloud."
             />
             <div class="corpo-card">
@@ -137,7 +144,7 @@
           </div>
           <div class="card" data-category="palestra">
             <img
-              src="./images/reconhecimentoFacial.png"
+              src="./images/cybersecurity.jpg"
               alt="Palestra Blockchain para Iniciantes."
             />
             <div class="corpo-card">
@@ -151,7 +158,7 @@
           </div>
           <div class="card" data-category="palestra">
             <img
-              src="./images/drone.jpg"
+              src="./images/cybersecurity.jpg"
               alt="Palestra Blockchain para Iniciantes."
             />
             <div class="corpo-card">
@@ -165,7 +172,7 @@
           </div>
           <div class="card" data-category="palestra">
             <img
-              src="./images/LOVABLE.jpg"
+              src="./images/cybersecurity.jpg"
               alt="Palestra Blockchain para Iniciantes."
             />
             <div class="corpo-card">
@@ -173,149 +180,6 @@
               <p>27 abr - 2026 • 14:00 / 29 abr - 2026 • 17:00</p>
               <p>Local: Centro Regional de Inovação e Transferência de Tecnologia UFJF, Juiz de Fora - MG</p>
               <button class="btn-descricao" data-acao="abrir" data-id="8">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="9">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="10">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="11">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="12">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="13">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="14">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="15">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="16">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="17">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="19">
-                Ver detalhes
-              </button>
-            </div>
-          </div>
-          <div class="card" data-category="palestra">
-            <img
-              src="./images/cybersecurity.jpg"
-              alt="Palestra Blockchain para Iniciantes."
-            />
-            <div class="corpo-card">
-              <h3>Blockchain para Iniciantes</h3>
-              <p>Data: 11/10 - 10h - Local: Auditório Principal</p>
-              <button class="btn-descricao" data-acao="abrir" data-id="20">
                 Ver detalhes
               </button>
             </div>
@@ -432,7 +296,6 @@
         </div>
       </footer>
     </div>
-    <script src="js/script.js"></script>
     <script>
       const backToTopButton = document.getElementById("back-to-top");
 
