@@ -1,16 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "techsphere",
-  "version": "1.0.0",
-  "description": "Este projeto simula uma plataforma web para um evento de tecnologia, desenvolvido como parte do projeto final das disciplinas de Gestão de Tecnologia da informação e Análise de Sistemas.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shenriqueti/techsphere.git"
-=======
   "name": "techsphere-main",
   "version": "1.0.0",
   "description": "Este projeto simula uma plataforma web para um evento de tecnologia, desenvolvido como parte do projeto final das disciplinas de Gestão de Tecnologia da informação e Análise de Sistemas.",
@@ -218,21 +206,11 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js"
->>>>>>> feat/meus-dados
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-<<<<<<< HEAD
-  "bugs": {
-    "url": "https://github.com/shenriqueti/techsphere/issues"
-  },
-  "homepage": "https://github.com/shenriqueti/techsphere#readme",
-  "dependencies": {
-    "express": "^5.2.1"
-  }
-=======
   "devDependencies": {
     "nodemon": "^3.1.14"
   },
@@ -244,5 +222,4 @@
     "url": "https://github.com/shenriqueti/techsphere/issues"
   },
   "homepage": "https://github.com/shenriqueti/techsphere#readme"
->>>>>>> feat/meus-dados
 }

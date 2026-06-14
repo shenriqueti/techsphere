@@ -104,10 +104,7 @@ body {
 
 .menu {
   display: flex;
-<<<<<<< HEAD
-=======
   align-items: center;
->>>>>>> feat/meus-dados
   gap: 2rem;
 }
 
@@ -596,13 +593,9 @@ body.light-theme .modal {
   margin-bottom: 0.5rem;
 }
 
-<<<<<<< HEAD
-.input-box input {
-=======
 .input-box input,
 .input-box textarea,
 .input-box select {
->>>>>>> feat/meus-dados
   background: var(--cor-fundo);
   border: 1px solid var(--cor-borda);
   border-radius: 8px;
@@ -612,20 +605,14 @@ body.light-theme .modal {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-<<<<<<< HEAD
-.input-box input:focus {
-=======
 .input-box input:focus,
 .input-box textarea:focus,
 .input-box select:focus {
->>>>>>> feat/meus-dados
   border-color: var(--cor-neon-azul);
   box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
   outline: none;
 }
 
-<<<<<<< HEAD
-=======
 .input-box select option {
   background: var(--cor-fundo-card);
   color: var(--cor-texto-principal);
@@ -676,7 +663,6 @@ body.light-theme .modal {
   color: var(--cor-texto-principal);
 }
 
->>>>>>> feat/meus-dados
 .linha-dupla {
   display: flex;
   gap: 1rem;
@@ -1411,8 +1397,6 @@ body.light-theme #theme-toggle .fa-sun {
 .toggle-password:hover {
     color: #333;
 }
-<<<<<<< HEAD
-=======
 
 /* ========================================= */
 /* SEARCH BAR (Eventos.html)                  */
@@ -1586,4 +1570,3 @@ body.light-theme #theme-toggle .fa-sun {
     border-bottom: none !important;
   }
 }
->>>>>>> feat/meus-dados
