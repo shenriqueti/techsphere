@@ -62,7 +62,7 @@ if (campoCep) {
 }
 
 // ── Submit ──
-document.querySelector('.buttons-container input[type="submit"]').addEventListener('click', async (e) => {
+document.querySelector('input[type="submit"]').addEventListener('click', async (e) => {
   e.preventDefault();
   if (!validarCampos()) return;
 
